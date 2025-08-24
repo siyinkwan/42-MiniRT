@@ -121,4 +121,238 @@ typedef struct s_light
 	double	brightness;		// Light intensity [0-1]
 }	t_light;
 
+/* ************************************************************************** */
+/*                             GEOMETRIC OBJECTS                             */
+/* ************************************************************************** */
+
+/*
+** Object type enumeration for polymorphic object handling
+*/
+typedef enum e_object_type
+{
+	OBJECT_SPHERE,
+	OBJECT_PLANE,
+	OBJECT_CYLINDER,
+	OBJECT_CONE			// Bonus: Second-degree object
+}	t_object_type;
+
+/*
+** t_sphere - Sphere geometric object
+** Equation: |P - center|² = radius²
+*/
+typedef struct s_sphere
+{
+	t_vec3		center;		// Center point of sphere
+	double		radius;		// Radius (diameter/2 from .rt file)
+	t_material	material;	// Surface properties
+}	t_sphere;
+
+/*
+** t_plane - Infinite plane geometric object
+** Equation: (P - point) · normal = 0
+*/
+typedef struct s_plane
+{
+	t_vec3		point;		// Any point on the plane
+	t_vec3		normal;		// Normalized normal vector
+	t_material	material;	// Surface properties
+}	t_plane;
+
+/*
+** t_cylinder - Finite cylinder geometric object
+** Axis-aligned cylinder with circular cross-sections
+*/
+typedef struct s_cylinder
+{
+	t_vec3		center;		// Center of cylinder base
+	t_vec3		axis;		// Normalized axis direction vector
+	double		radius;		// Radius (diameter/2 from .rt file)
+	double		height;		// Height of cylinder
+	t_material	material;	// Surface properties
+}	t_cylinder;
+
+/*
+** t_cone - Cone geometric object (BONUS)
+** Mathematical definition: cone with circular base
+** Apex angle determines how "wide" the cone opens
+*/
+typedef struct s_cone
+{
+	t_vec3		tip;		// Apex (pointed end) of cone
+	t_vec3		axis;		// Normalized axis from tip toward base
+	double		angle;		// Half-angle in radians (tan(angle) = radius/height)
+	double		height;		// Height from tip to base
+	t_material	material;	// Surface properties
+}	t_cone;
+
+/*
+** t_object - Polymorphic object container
+** Uses union for memory efficiency and type safety
+*/
+typedef struct s_object
+{
+	t_object_type	type;		// Which type of object this is
+	union
+	{
+		t_sphere	sphere;
+		t_plane		plane;
+		t_cylinder	cylinder;
+		t_cone		cone;		// Bonus object
+	}	data;
+	struct s_object	*next;		// Linked list for multiple objects
+}	t_object;
+
+/* ************************************************************************** */
+/*                           INTERSECTION & SCENE                            */
+/* ************************************************************************** */
+
+/*
+** t_hit - Intersection result structure
+** Contains all information about a ray-object intersection
+*/
+typedef struct s_hit
+{
+	bool		hit;		// Did intersection occur?
+	double		t;			// Distance parameter along ray
+	t_vec3		point;		// 3D intersection point
+	t_vec3		normal;		// Surface normal at intersection (normalized)
+	t_material	*material;	// Pointer to intersected object's material
+	t_object	*object;	// Pointer to intersected object
+}	t_hit;
+
+/*
+** t_ambient - Global ambient lighting
+** Represents light that illuminates all objects equally
+*/
+typedef struct s_ambient
+{
+	double		ratio;		// Ambient lighting ratio [0.0-1.0]
+	t_vec3		color;		// Ambient light color (RGB 0-1)
+}	t_ambient;
+
+/*
+** t_scene - Complete scene description
+** Contains all elements needed for ray tracing
+*/
+typedef struct s_scene
+{
+	t_ambient	ambient;	// Global ambient lighting
+	t_camera	camera;		// Single camera (mandatory)
+	t_light		*lights;	// Array of lights (bonus: multiple)
+	int			light_count;// Number of lights in scene
+	t_object	*objects;	// Linked list of all objects
+	t_vec3		background;	// Background color when rays miss all objects
+}	t_scene;
+
+/* ************************************************************************** */
+/*                            MINILIBX INTEGRATION                           */
+/* ************************************************************************** */
+
+/*
+** t_minirt - Main program structure
+** Integrates MinilibX with ray tracing scene
+*/
+typedef struct s_minirt
+{
+	void		*mlx;			// MLX instance pointer
+	void		*window;		// Window instance pointer
+	void		*image;			// Image buffer pointer
+	char		*img_data;		// Direct access to image pixel data
+	int			width;			// Window/image width in pixels
+	int			height;			// Window/image height in pixels
+	int			bits_per_pixel;	// Color depth (usually 32)
+	int			line_length;	// Bytes per image line
+	int			endian;			// Byte order for color values
+	t_scene		scene;			// Ray tracing scene data
+}	t_minirt;
+
+/* ************************************************************************** */
+/*                            FUNCTION DECLARATIONS                          */
+/* ************************************************************************** */
+
+/*
+** Vector mathematics operations
+*/
+t_vec3		vec3_create(double x, double y, double z);
+t_vec3		vec3_add(t_vec3 a, t_vec3 b);
+t_vec3		vec3_subtract(t_vec3 a, t_vec3 b);
+t_vec3		vec3_multiply(t_vec3 v, double scalar);
+t_vec3		vec3_divide(t_vec3 v, double scalar);
+double		vec3_dot(t_vec3 a, t_vec3 b);
+t_vec3		vec3_cross(t_vec3 a, t_vec3 b);
+double		vec3_length(t_vec3 v);
+double		vec3_length_squared(t_vec3 v);
+t_vec3		vec3_normalize(t_vec3 v);
+double		vec3_distance(t_vec3 a, t_vec3 b);
+
+/*
+** Ray operations
+*/
+t_ray		ray_create(t_vec3 origin, t_vec3 direction);
+t_vec3		ray_at(t_ray ray, double t);
+
+/*
+** Object intersection functions
+*/
+t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
+t_hit		intersect_plane(t_ray ray, t_plane plane);
+t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
+t_hit		intersect_cone(t_ray ray, t_cone cone);		// Bonus
+t_hit		intersect_object(t_ray ray, t_object *object);
+t_hit		intersect_scene(t_ray ray, t_scene *scene);
+
+/*
+** Lighting and shading
+*/
+t_vec3		calculate_lighting(t_hit hit, t_scene *scene, t_vec3 view_dir);
+t_vec3		apply_ambient(t_material *material, t_ambient ambient);
+t_vec3		apply_diffuse(t_material *material, t_vec3 light_dir, t_vec3 normal, t_vec3 light_color);
+t_vec3		apply_specular(t_material *material, t_vec3 light_dir, t_vec3 view_dir, t_vec3 normal, t_vec3 light_color);
+bool		in_shadow(t_vec3 point, t_vec3 light_pos, t_scene *scene);
+
+/*
+** Pattern generation (bonus)
+*/
+t_vec3		apply_pattern(t_material *material, t_vec3 point);
+t_vec3		checkerboard_pattern(t_vec3 point, t_vec3 color1, t_vec3 color2, double scale);
+
+/*
+** Camera and ray generation
+*/
+void		setup_camera(t_camera *camera);
+t_ray		camera_ray(t_camera camera, double x, double y, int width, int height);
+
+/*
+** Scene parsing
+*/
+int			parse_scene(char *filename, t_scene *scene);
+void		free_scene(t_scene *scene);
+
+/*
+** Rendering
+*/
+void		render_scene(t_minirt *minirt);
+int			trace_ray(t_ray ray, t_scene *scene);
+
+/*
+** MinilibX integration
+*/
+int			init_minilibx(t_minirt *minirt, int width, int height);
+void		put_pixel(t_minirt *minirt, int x, int y, int color);
+int			rgb_to_int(t_vec3 color);
+t_vec3		int_to_rgb(int color);
+
+/*
+** Event handling
+*/
+int			key_hook(int keycode, t_minirt *minirt);
+int			close_hook(t_minirt *minirt);
+
+/*
+** Utility functions
+*/
+double		clamp(double value, double min, double max);
+double		degrees_to_radians(double degrees);
+double		radians_to_degrees(double radians);
+
 #endif
