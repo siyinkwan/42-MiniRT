@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/22 15:45:18 by sguan            ###   ########.fr       */
+/*   Updated: 2025/08/25 20:40:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <math.h>
 # include <fcntl.h>
+ #include <stdbool.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
@@ -285,74 +286,75 @@ double		vec3_length_squared(t_vec3 v);
 t_vec3		vec3_normalize(t_vec3 v);
 double		vec3_distance(t_vec3 a, t_vec3 b);
 
-/*
-** Ray operations
-*/
-t_ray		ray_create(t_vec3 origin, t_vec3 direction);
-t_vec3		ray_at(t_ray ray, double t);
 
-/*
-** Object intersection functions
-*/
-t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
-t_hit		intersect_plane(t_ray ray, t_plane plane);
-t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
-t_hit		intersect_cone(t_ray ray, t_cone cone);		// Bonus
-t_hit		intersect_object(t_ray ray, t_object *object);
-t_hit		intersect_scene(t_ray ray, t_scene *scene);
+// /*
+// ** Ray operations
+// */
+// t_ray		ray_create(t_vec3 origin, t_vec3 direction);
+// t_vec3		ray_at(t_ray ray, double t);
 
-/*
-** Lighting and shading
-*/
-t_vec3		calculate_lighting(t_hit hit, t_scene *scene, t_vec3 view_dir);
-t_vec3		apply_ambient(t_material *material, t_ambient ambient);
-t_vec3		apply_diffuse(t_material *material, t_vec3 light_dir, t_vec3 normal, t_vec3 light_color);
-t_vec3		apply_specular(t_material *material, t_vec3 light_dir, t_vec3 view_dir, t_vec3 normal, t_vec3 light_color);
-bool		in_shadow(t_vec3 point, t_vec3 light_pos, t_scene *scene);
+// /*
+// ** Object intersection functions
+// */
+// t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
+// t_hit		intersect_plane(t_ray ray, t_plane plane);
+// t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
+// t_hit		intersect_cone(t_ray ray, t_cone cone);		// Bonus
+// t_hit		intersect_object(t_ray ray, t_object *object);
+// t_hit		intersect_scene(t_ray ray, t_scene *scene);
 
-/*
-** Pattern generation (bonus)
-*/
-t_vec3		apply_pattern(t_material *material, t_vec3 point);
-t_vec3		checkerboard_pattern(t_vec3 point, t_vec3 color1, t_vec3 color2, double scale);
+// /*
+// ** Lighting and shading
+// */
+// t_vec3		calculate_lighting(t_hit hit, t_scene *scene, t_vec3 view_dir);
+// t_vec3		apply_ambient(t_material *material, t_ambient ambient);
+// t_vec3		apply_diffuse(t_material *material, t_vec3 light_dir, t_vec3 normal, t_vec3 light_color);
+// t_vec3		apply_specular(t_material *material, t_vec3 light_dir, t_vec3 view_dir, t_vec3 normal, t_vec3 light_color);
+// bool		in_shadow(t_vec3 point, t_vec3 light_pos, t_scene *scene);
 
-/*
-** Camera and ray generation
-*/
-void		setup_camera(t_camera *camera);
-t_ray		camera_ray(t_camera camera, double x, double y, int width, int height);
+// /*
+// ** Pattern generation (bonus)
+// */
+// t_vec3		apply_pattern(t_material *material, t_vec3 point);
+// t_vec3		checkerboard_pattern(t_vec3 point, t_vec3 color1, t_vec3 color2, double scale);
 
-/*
-** Scene parsing
-*/
-int			parse_scene(char *filename, t_scene *scene);
-void		free_scene(t_scene *scene);
+// /*
+// ** Camera and ray generation
+// */
+// void		setup_camera(t_camera *camera);
+// t_ray		camera_ray(t_camera camera, double x, double y, int width, int height);
 
-/*
-** Rendering
-*/
-void		render_scene(t_minirt *minirt);
-int			trace_ray(t_ray ray, t_scene *scene);
+// /*
+// ** Scene parsing
+// */
+// int			parse_scene(char *filename, t_scene *scene);
+// void		free_scene(t_scene *scene);
 
-/*
-** MinilibX integration
-*/
-int			init_minilibx(t_minirt *minirt, int width, int height);
-void		put_pixel(t_minirt *minirt, int x, int y, int color);
-int			rgb_to_int(t_vec3 color);
-t_vec3		int_to_rgb(int color);
+// /*
+// ** Rendering
+// */
+// void		render_scene(t_minirt *minirt);
+// int			trace_ray(t_ray ray, t_scene *scene);
 
-/*
-** Event handling
-*/
-int			key_hook(int keycode, t_minirt *minirt);
-int			close_hook(t_minirt *minirt);
+// /*
+// ** MinilibX integration
+// */
+// int			init_minilibx(t_minirt *minirt, int width, int height);
+// void		put_pixel(t_minirt *minirt, int x, int y, int color);
+// int			rgb_to_int(t_vec3 color);
+// t_vec3		int_to_rgb(int color);
 
-/*
-** Utility functions
-*/
-double		clamp(double value, double min, double max);
-double		degrees_to_radians(double degrees);
-double		radians_to_degrees(double radians);
+// /*
+// ** Event handling
+// */
+// int			key_hook(int keycode, t_minirt *minirt);
+// int			close_hook(t_minirt *minirt);
+
+// /*
+// ** Utility functions
+// */
+// double		clamp(double value, double min, double max);
+// double		degrees_to_radians(double degrees);
+// double		radians_to_degrees(double radians);
 
 #endif
