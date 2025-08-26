@@ -1,1 +1,4 @@
 minilibx-linux
+objects
+*.o
+*.txt

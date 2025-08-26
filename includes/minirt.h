@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/25 20:40:12 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/26 21:01:22 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # include <fcntl.h>
  #include <stdbool.h>
 # include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "mlx.h"
 
+# define SUCCESS 0;
 /* ************************************************************************** */
 /*                              MATHEMATICAL TYPES                           */
 /* ************************************************************************** */
@@ -287,11 +288,12 @@ t_vec3		vec3_normalize(t_vec3 v);
 double		vec3_distance(t_vec3 a, t_vec3 b);
 
 
-// /*
-// ** Ray operations
-// */
-// t_ray		ray_create(t_vec3 origin, t_vec3 direction);
-// t_vec3		ray_at(t_ray ray, double t);
+/*
+** Ray operations
+*/
+t_ray		ray_create(t_vec3 origin, t_vec3 direction);
+bool	ray_valid_t(t_ray ray, double t);
+t_vec3		ray_at(t_ray ray, double t);
 
 // /*
 // ** Object intersection functions

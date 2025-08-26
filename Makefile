@@ -3,25 +3,27 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/08/25 20:44:38 by marvin           ###   ########.fr        #
+#    Updated: 2025/08/26 15:04:07 by sguan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MLX = minilibx-linux
 LIBFT_DIR = ./libft
+OBJDIR = objects
 
 SRCS = sources/main.c \
-	sources/math/vec_ops.c \
-	sources/math/vec_ops2.c \
-	sources/math/vec_ops3.c
+    sources/math/vec_ops.c \
+    sources/math/vec_ops2.c \
+    sources/math/vec_ops3.c
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:sources/%.c=$(OBJDIR)/%.o)
+
 NAME = miniRT
-CFLAGS = -Wall -Wextra -Werror -ggdb -lm -I/usr/include -I$(MLX) -I$(LIBFT_DIR) -I./includes
-LDFLAGS = -L$(MLX) -lmlx -L/usr/lib -lXext -lX11 -lm -lz  -L $(LIBFT_DIR)
+CFLAGS = -Wall -Wextra -Werror -ggdb -I/usr/include -I$(MLX) -I$(LIBFT_DIR) -I./includes
+LDFLAGS = -L$(MLX) -lmlx -L/usr/lib -lXext -lX11 -lm -lz -L$(LIBFT_DIR) -lft
 CC = cc
 RM = rm -f
 
@@ -41,12 +43,14 @@ $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
 	$(CC) $(OBJS) $(LDFLAGS) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -I$(MLX) -I/includes -O3 -c $< -o $@
+$(OBJDIR)/%.o: sources/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
-	make -C ${LIBFT_DIR} clean
+	$(RM) -r $(OBJDIR)
+	$(RM) test_vec3
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	$(RM) $(NAME)
@@ -55,4 +59,5 @@ fclean: clean
 re: fclean all
 
 bonus: all
-	
+
+.PHONY: all clean fclean re bonus test_vec3 run_vec3_test
