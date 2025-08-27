@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vec_ops.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 20:05:55 by sykwan            #+#    #+#             */
-/*   Updated: 2025/08/25 20:25:26 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/27 16:06:59 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#define EPSILON 1e-9
 
 t_vec3		vec3_create(double x, double y, double z)
 {

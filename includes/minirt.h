@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/26 21:01:22 by sguan            ###   ########.fr       */
+/*   Updated: 2025/08/27 20:19:13 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "../libft/libft.h"
 # include "mlx.h"
 
-# define SUCCESS 0;
+#define EPSILON 1e-9
 /* ************************************************************************** */
 /*                              MATHEMATICAL TYPES                           */
 /* ************************************************************************** */
@@ -245,6 +245,16 @@ typedef struct s_scene
 	t_object	*objects;	// Linked list of all objects
 	t_vec3		background;	// Background color when rays miss all objects
 }	t_scene;
+
+typedef struct s_quadratic
+{
+    double	a;
+    double	b;
+    double	c;
+    double	discriminant;
+    double	t1;
+    double	t2;
+}	t_quadratic;
 
 /* ************************************************************************** */
 /*                            MINILIBX INTEGRATION                           */
