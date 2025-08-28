@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/08/26 15:04:07 by sguan            ###   ########.fr        #
+#    Updated: 2025/08/28 12:05:49 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,12 @@ LIBFT_DIR = ./libft
 OBJDIR = objects
 
 SRCS = sources/main.c \
-    sources/math/vec_ops.c \
-    sources/math/vec_ops2.c \
-    sources/math/vec_ops3.c
+	sources/math/vec_ops.c \
+	sources/math/vec_ops2.c \
+	sources/math/vec_ops3.c \
+	sources/includes/intersect_sphere.c \
+	sources/includes/intersect_plane.c \
+	sources/includes/intersect_cylinder.c
 
 OBJS = $(SRCS:sources/%.c=$(OBJDIR)/%.o)
 
