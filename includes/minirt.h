@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/27 20:19:13 by sguan            ###   ########.fr       */
+/*   Updated: 2025/08/29 17:02:22 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ typedef struct s_cylinder
 */
 typedef struct s_cone
 {
-	t_vec3		tip;		// Apex (pointed end) of cone
+	t_vec3		apex;		// Apex (pointed end) of cone
 	t_vec3		axis;		// Normalized axis from tip toward base
 	double		angle;		// Half-angle in radians (tan(angle) = radius/height)
 	double		height;		// Height from tip to base
@@ -308,12 +308,13 @@ t_vec3		ray_at(t_ray ray, double t);
 // /*
 // ** Object intersection functions
 // */
-// t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
-// t_hit		intersect_plane(t_ray ray, t_plane plane);
-// t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
-// t_hit		intersect_cone(t_ray ray, t_cone cone);		// Bonus
-// t_hit		intersect_object(t_ray ray, t_object *object);
-// t_hit		intersect_scene(t_ray ray, t_scene *scene);
+double		calculate_hit_plane(t_ray ray, t_plane plane);
+t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
+t_hit		intersect_plane(t_ray ray, t_plane plane);
+t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
+t_hit		intersect_cone(t_ray ray, t_cone cone);		// Bonus
+t_hit		intersect_object(t_ray ray, t_object *object);
+t_hit		intersect_scene(t_ray ray, t_scene *scene);
 
 // /*
 // ** Lighting and shading

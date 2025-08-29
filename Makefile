@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/08/28 12:05:49 by marvin           ###   ########.fr        #
+#    Updated: 2025/08/29 14:31:38 by sguan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS = sources/main.c \
 	sources/math/vec_ops3.c \
 	sources/includes/intersect_sphere.c \
 	sources/includes/intersect_plane.c \
-	sources/includes/intersect_cylinder.c
+	sources/includes/intersect_cylinder.c\
+	sources/includes/intersect_cone.c
 
 OBJS = $(SRCS:sources/%.c=$(OBJDIR)/%.o)
 

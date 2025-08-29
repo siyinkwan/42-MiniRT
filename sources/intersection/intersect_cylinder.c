@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect_cylinder.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 20:15:14 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/28 13:56:14 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/29 16:34:39 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ double	intersect_infinite_cylinder(t_ray ray, t_cylinder cylinder)
     return (-1.0);
 }
 
-bool	in_circle(t_vec3 t, t_ray ray, t_plane plane, double radius)
+bool	in_circle(double t, t_ray ray, t_plane plane, double radius)
 {
 	t_vec3	hit;
 	double distance;
@@ -63,8 +63,8 @@ double	intersect_cylinder_caps(t_ray ray, t_cylinder cylinder)
 			cylinder.center.y - cylinder.height / 2.0, cylinder.center.z);
 	top.normal = cylinder.axis;
 	bottom.normal = cylinder.axis;
-	t_top = intersect_plane(ray, top);
-	t_bottom = intersect_plane(ray, bottom);
+	t_top = calculate_hit_plane(ray, top);
+	t_bottom = calculate_hit_plane(ray, bottom);
 	if (t_top > 0.0 && in_circle(t_top, ray, top, cylinder.radius))
 	{
 		if (t_bottom > 0.0 && in_circle(t_bottom, ray, bottom, cylinder.radius))
