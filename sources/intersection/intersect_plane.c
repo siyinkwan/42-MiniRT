@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 20:14:22 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/29 17:03:36 by sguan            ###   ########.fr       */
+/*   Updated: 2025/08/31 21:00:08 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,19 @@ t_hit		intersect_plane(t_ray ray, t_plane plane)
 {
 	t_hit	result;
 	double	t;
-	t_vec3	to_sphere;
 
-    result.hit = false;
-    result.t = -1.0;
-    result.material = NULL;
-    result.object = NULL;
+	result.hit = false;
+	result.t = -1.0;
+	result.material = NULL;
+	result.object = NULL;
+	t = calculate_hit_plane(ray, plane);
 	if (t > 0.0)
 	{
-		
-		t = calculate_hit_plane(ray, plane);
-		
+		result.hit = true;
+		result.t = t;
+		result.point = ray_at(ray, t);
+		result.normal = plane.normal;
+		result.material = &plane.material;
 	}
+	return (result);
 }

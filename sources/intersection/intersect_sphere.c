@@ -6,11 +6,11 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 16:41:16 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/29 17:01:44 by sguan            ###   ########.fr       */
+/*   Updated: 2025/08/31 21:43:44 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt"
+#include "minirt.h"
 
 double	calculate_hit_sphere(t_ray ray, t_sphere sphere)
 {
@@ -46,17 +46,17 @@ t_hit		intersect_sphere(t_ray ray, t_sphere sphere)
 	double	t;
 	t_vec3	to_sphere;
 
-    result.hit = false;
-    result.t = -1.0;
-    result.material = NULL;
-    result.object = NULL;
+	result.hit = false;
+	result.t = -1.0;
+	result.material = NULL;
+	result.object = NULL;
 	t = calculate_hit_sphere(ray, sphere);
 	if (t > 0.0)
 	{
 		result.hit = true;
 		result.t = t;
 		result.point = ray_at(ray, t);
-		to_sphere = vec3_substract(result.point, sphere.center);
+		to_sphere = vec3_subtract(result.point, sphere.center);
 		result.normal = vec3_normalize(to_sphere);
 		result.material = &sphere.material;
 	}

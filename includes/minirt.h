@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/29 17:02:22 by sguan            ###   ########.fr       */
+/*   Updated: 2025/08/31 21:44:28 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,13 @@ typedef struct s_light
 /*
 ** Object type enumeration for polymorphic object handling
 */
-typedef enum e_object_type
+typedef enum e_type
 {
 	OBJECT_SPHERE,
 	OBJECT_PLANE,
 	OBJECT_CYLINDER,
 	OBJECT_CONE			// Bonus: Second-degree object
-}	t_object_type;
+}	t_type;
 
 /*
 ** t_sphere - Sphere geometric object
@@ -193,7 +193,7 @@ typedef struct s_cone
 */
 typedef struct s_object
 {
-	t_object_type	type;		// Which type of object this is
+	t_type	type;		// Which type of object this is
 	union
 	{
 		t_sphere	sphere;
@@ -302,18 +302,19 @@ double		vec3_distance(t_vec3 a, t_vec3 b);
 ** Ray operations
 */
 t_ray		ray_create(t_vec3 origin, t_vec3 direction);
-bool	ray_valid_t(t_ray ray, double t);
+bool		ray_valid_t(t_ray ray, double t);
 t_vec3		ray_at(t_ray ray, double t);
 
 // /*
 // ** Object intersection functions
 // */
 double		calculate_hit_plane(t_ray ray, t_plane plane);
+bool		in_circle(double t, t_ray ray, t_plane plane, double radius);
 t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
 t_hit		intersect_plane(t_ray ray, t_plane plane);
 t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
 t_hit		intersect_cone(t_ray ray, t_cone cone);		// Bonus
-t_hit		intersect_object(t_ray ray, t_object *object);
+//t_hit		intersect_object(t_ray ray, t_object *object);
 t_hit		intersect_scene(t_ray ray, t_scene *scene);
 
 // /*
