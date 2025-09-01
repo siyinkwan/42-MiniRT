@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/31 21:44:28 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/01 18:28:41 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,7 +335,7 @@ t_hit		intersect_scene(t_ray ray, t_scene *scene);
 // /*
 // ** Camera and ray generation
 // */
-// void		setup_camera(t_camera *camera);
+void		camera_setup(t_camera *camera);
 // t_ray		camera_ray(t_camera camera, double x, double y, int width, int height);
 
 // /*
