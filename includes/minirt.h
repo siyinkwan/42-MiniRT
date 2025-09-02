@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/01 18:28:41 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/02 21:45:20 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
  #include <stdbool.h>
 # include "../libft/libft.h"
 # include "mlx.h"
+
+#ifndef PI
+#define PI 3.14159265358979323846
+#endif
 
 #define EPSILON 1e-9
 /* ************************************************************************** */
@@ -110,6 +114,15 @@ typedef struct s_camera
 	double	fov;			// Field of view in degrees [0-180]
 	double	aspect_ratio;	// Width/height ratio
 }	t_camera;
+
+typedef struct	s_viewport
+{
+	double	height;
+	double	width;
+	double	x;
+	double	y;
+	t_vec3	pos_in_world;
+}	t_viewport;
 
 /*
 ** t_light - Light source for illumination
@@ -288,7 +301,7 @@ typedef struct s_minirt
 t_vec3		vec3_create(double x, double y, double z);
 t_vec3		vec3_add(t_vec3 a, t_vec3 b);
 t_vec3		vec3_subtract(t_vec3 a, t_vec3 b);
-t_vec3		vec3_multiply(t_vec3 v, double scalar);
+t_vec3		vec3_scale(t_vec3 v, double scalar);
 t_vec3		vec3_divide(t_vec3 v, double scalar);
 double		vec3_dot(t_vec3 a, t_vec3 b);
 t_vec3		vec3_cross(t_vec3 a, t_vec3 b);
@@ -313,8 +326,7 @@ bool		in_circle(double t, t_ray ray, t_plane plane, double radius);
 t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
 t_hit		intersect_plane(t_ray ray, t_plane plane);
 t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
-t_hit		intersect_cone(t_ray ray, t_cone cone);		// Bonus
-//t_hit		intersect_object(t_ray ray, t_object *object);
+t_hit		intersect_cone(t_ray ray, t_cone cone);
 t_hit		intersect_scene(t_ray ray, t_scene *scene);
 
 // /*
@@ -336,7 +348,7 @@ t_hit		intersect_scene(t_ray ray, t_scene *scene);
 // ** Camera and ray generation
 // */
 void		camera_setup(t_camera *camera);
-// t_ray		camera_ray(t_camera camera, double x, double y, int width, int height);
+t_ray		generate_ray(t_camera *camera, double pixel_x, double pixel_y, int width, int height);
 
 // /*
 // ** Scene parsing

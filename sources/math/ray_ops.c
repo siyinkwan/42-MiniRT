@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:07:24 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/26 15:59:49 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/02 21:45:20 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_vec3	ray_at(t_ray ray, double t)
 	t_vec3	scaled_direction;
 	t_vec3	result;
 	
-	scaled_direction = vec3_multiply(ray.direction, t);
+	scaled_direction = vec3_scale(ray.direction, t);
 	result = vec3_add(ray.origin, scaled_direction);
 	return (result);
 }

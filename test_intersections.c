@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 void test_sphere_intersection(void)
 {
     printf("Testing sphere intersection...\n");
@@ -90,7 +86,7 @@ void test_cone_intersection(void)
     t_cone cone;
     cone.apex = vec3_create(0, 0, -5);
     cone.axis = vec3_create(0, 1, 0);
-    cone.angle = M_PI / 6;  // 30度
+    cone.angle = PI / 6;
     cone.height = 2.0;
     
     // 测试曲面命中

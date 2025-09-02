@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 20:05:55 by sykwan            #+#    #+#             */
-/*   Updated: 2025/08/27 16:06:59 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/02 21:45:20 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_vec3		vec3_subtract(t_vec3 a, t_vec3 b)
     
     return (result);
 }
-t_vec3		vec3_multiply(t_vec3 v, double scalar)
+t_vec3		vec3_scale(t_vec3 v, double scalar)
 {
     t_vec3  result;
 
