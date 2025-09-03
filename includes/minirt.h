@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/02 21:45:20 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/03 18:27:19 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,14 +359,16 @@ t_ray		generate_ray(t_camera *camera, double pixel_x, double pixel_y, int width,
 // /*
 // ** Rendering
 // */
-// void		render_scene(t_minirt *minirt);
+void		put_pixel(t_minirt *minirt, int x, int y, int color);
+void		render_scene(t_minirt *minirt);
 // int			trace_ray(t_ray ray, t_scene *scene);
 
 // /*
 // ** MinilibX integration
 // */
-// int			init_minilibx(t_minirt *minirt, int width, int height);
-// void		put_pixel(t_minirt *minirt, int x, int y, int color);
+int			init_mlx(t_minirt *minirt);
+void		display_image(t_minirt *minirt);
+int			close_window(t_minirt *minirt);
 // int			rgb_to_int(t_vec3 color);
 // t_vec3		int_to_rgb(int color);
 
