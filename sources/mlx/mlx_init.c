@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:40:30 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/03 18:25:14 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/03 18:51:23 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	init_mlx(t_minirt *minirt)
     if (!minirt->image)
         return (0);
     minirt->img_data = mlx_get_data_addr(minirt->image, &minirt->bits_per_pixel,
-                                            &minirt->line_length, &minirt->endian);
+					&minirt->line_length, &minirt->endian);
     return (1);
 }
 

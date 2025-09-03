@@ -25,16 +25,16 @@ void	create_test_scene(t_scene *scene)
     scene->camera.forward = vec3_create(0, 0, -1);
     scene->camera.fov = 70.0;
     scene->camera.aspect_ratio = 800.0 / 600.0;
-    scene->objects = malloc(sizeof(t_object));
+    scene->objects = malloc(sizeof(t_object)); //don't forget to free
     scene->objects[0].type = OBJECT_SPHERE;
     scene->objects[0].data.sphere.center = vec3_create(0, 0, -5);
     scene->objects[0].data.sphere.radius = 1.0;
     scene->objects[0].next = NULL;
-    scene->ambient.ratio = 0.2;
-    scene->ambient.color = vec3_create(0.1, 0.1, 0.1);
-    scene->background = vec3_create(0, 0, 0);
-    scene->light_count = 0;
-    scene->lights = NULL;
+    // scene->ambient.ratio = 0.2;
+    // scene->ambient.color = vec3_create(0.1, 0.1, 0.1);
+    // scene->background = vec3_create(0, 0, 0);
+    // scene->light_count = 0;
+    // scene->lights = NULL;
 }
 
 int	main(void)
