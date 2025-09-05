@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:32:28 by sguan             #+#    #+#             */
-/*   Updated: 2024/11/25 18:40:26 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/05 17:59:28 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 int				ft_tolower(int c);
 
 int				ft_toupper(int c);
+
+char			*get_next_line(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:40:21 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/03 17:41:27 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/05 13:28:28 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	put_pixel(t_minirt *minirt, int x, int y, int color)
 void	render_scene(t_minirt *minirt)
 {
 	t_ray	ray;
-	double	x;
-	double	y;
+	int		x;
+	int		y;
 	t_hit	hit;
 	int		color;
 	
