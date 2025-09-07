@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 20:29:17 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/06 19:44:01 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/07 20:29:02 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,43 @@ bool	parse_camera(t_scene *scene, char **tokens)
 	return (true);
 }
 
+void	add_light(t_scene *scene, t_light *new_lights)
+{
+	int		i;
 
-// parse_light()
+	i = 0;
+	while (i < scene->light_count)
+	{
+		new_lights[i] = scene->lights[i];
+		i++;
+	}
+}
+
+bool	parse_light(t_scene *scene, char **tokens)
+{
+	t_vec3	pos;
+	double	brightness;
+	t_vec3	color;
+	t_light	*new_lights;
+
+	if (count_tokens(tokens) != 4)
+		return (printf("Error: Light requires 3 parameters\n"), false);
+	if (!parse_vec3(tokens[1], &pos))
+		return(printf("Error: Invalid light position\n"), false);
+	brightness = ft_atof(tokens[2]);
+	if (brightness < 0.0 || brightness > 1.0)
+		return (printf("Error: Invalid light brightness\n"), false);
+	if (!parse_color(tokens[3], &color))
+		return (printf("Error: Invalid light color\n"), false);
+	new_lights = malloc(sizeof(t_light) * (scene->light_count + 1));
+	if (!new_lights)
+        return (printf("Error: Memory allocation failed\n"), false);
+	add_light(scene, new_lights);
+	new_lights[scene->light_count].position = pos;
+	new_lights[scene->light_count].brightness = brightness;
+	new_lights[scene->light_count].color = color;
+	free(scene->lights);
+    scene->lights = new_lights;
+    scene->light_count++;
+	return (true);
+}

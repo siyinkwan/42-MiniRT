@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:37:26 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/06 19:38:09 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/07 20:39:44 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,31 +34,54 @@ t_scene	*init_scene(void)
 	return (scene);
 }
 
-bool validate_scene(t_scene *scene)
+bool	parse_color(char *token, t_vec3 *color)
 {
-	if (!scene)
-		return (false);
-	if (scene->ambient.ratio < 0)
+	char	**rgb_arr;
+	int		r;
+	int		g;
+	int		b;
+
+	rgb_arr = ft_split(token, ',');
+	if (!rgb_arr)
+		return (printf("Error: failed to split color\n"), false);
+	if (count_tokens(rgb_arr) != 3)
 	{
-		printf("Error: Missing ambient light definition\n");
-		return (false);
+		free_tokens(rgb_arr);
+		return (printf("Error: invalid color parameters\n"), false);
 	}
-	if (scene->camera.fov <= 0)
+	r = ft_atoi(rgb_arr[0]);
+	g = ft_atoi(rgb_arr[1]);
+	b = ft_atoi(rgb_arr[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
-		printf("Error: Missing camera definition\n");
-		return (false);
+		free_tokens(rgb_arr);
+		return (printf("Error: color values must be 0-255\n"), false);
 	}
-	if (!scene->objects)
-	{
-		printf("Error: Scene must contain at least one object\n");
-		return (false);
-	}
-	return (true);
+	color->x = r;
+	color->y = g;
+	color->z = b;
+	return (free_tokens(rgb_arr), true);
 }
 
-void	free_scene(t_scene *scene)
+bool	parse_vec3(char *token, t_vec3 *vec)
 {
-	
+	char	**coords;
+
+	if (!token || !vec)
+		return (printf("Error: null vector token or pointer\n"), false);
+	coords = ft_split(token, ',');
+	if (!coords)
+		return (printf("Error: failed to split vector\n"), false);
+	if (count_tokens(coords) != 3)
+	{
+		free_tokens(coords);
+		return (printf("Error: vector requires 3 coordinates\n"), false);
+	}
+	vec->x = ft_atof(coords[0]);
+	vec->y = ft_atof(coords[1]);
+	vec->z = ft_atof(coords[2]);
+	free_tokens(coords);
+	return (true);
 }
 
 bool	parse_line(char *line, t_scene *scene)

@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/06 18:58:44 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/07 20:07:57 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,9 +354,11 @@ t_ray		generate_ray(t_camera *camera, double pixel_x, double pixel_y, int width,
 // ** Scene parsing
 // */
 void		error_exit(char *msg);
-void		free_scene(t_scene *scene);
+void		free_tokens(char **tokens);
 int			count_tokens(char **tokens);
-
+bool		parse_color(char *token, t_vec3 *color);
+bool		parse_vec3(char *token, t_vec3 *vec);
+void		free_scene(t_scene *scene);
 t_scene		*init_scene(void);
 int			parse_scene(char *filename, t_scene *scene);
 
