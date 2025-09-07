@@ -6,21 +6,72 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:37:26 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/05 20:28:23 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/06 19:38:09 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_scene	*init_scene(void)
+{
+	t_scene	*scene;
+
+	scene = malloc(sizeof(t_scene));
+	if (!scene)
+		return (NULL);
+	scene->ambient.ratio = 0.0;
+	scene->ambient.color = vec3_create(0.0, 0.0, 0.0);
+	scene->camera.position = vec3_create(0.0, 0.0, 0.0);
+	scene->camera.forward = vec3_create(0.0, 0.0, -1.0);
+	scene->camera.up = vec3_create(0.0, 1.0, 0.0);
+	scene->camera.right = vec3_create(1.0, 0.0, 0.0);
+	scene->camera.fov = 0.0;
+	scene->camera.aspect_ratio = 0.0;
+	scene->lights = NULL;
+	scene->light_count = 0;
+	scene->objects = NULL;
+	scene->background = vec3_create(0.0, 0.0, 0.0);
+	return (scene);
+}
+
+bool validate_scene(t_scene *scene)
+{
+	if (!scene)
+		return (false);
+	if (scene->ambient.ratio < 0)
+	{
+		printf("Error: Missing ambient light definition\n");
+		return (false);
+	}
+	if (scene->camera.fov <= 0)
+	{
+		printf("Error: Missing camera definition\n");
+		return (false);
+	}
+	if (!scene->objects)
+	{
+		printf("Error: Scene must contain at least one object\n");
+		return (false);
+	}
+	return (true);
+}
+
+void	free_scene(t_scene *scene)
+{
+	
+}
 
 bool	parse_line(char *line, t_scene *scene)
 {
 	char	**tokens;
 	bool	result;
 
-	if (!line || line[0] == "#" || line[0] == '\0')
+	if (!line || line[0] == '#' || line[0] == '\0')
 		return (true);
 	result = false;
 	tokens = ft_split(line, ' ');
+	if (!tokens || !tokens[0])
+		return (free_tokens(tokens), false);
     if (ft_strcmp(tokens[0], "A") == 0)
         result = parse_ambient(scene, tokens);
     else if (ft_strcmp(tokens[0], "C") == 0)
@@ -35,7 +86,7 @@ bool	parse_line(char *line, t_scene *scene)
         result = parse_cylinder(scene, tokens);
     else if (ft_strcmp(tokens[0], "co") == 0)
         result = parse_cone(scene, tokens);
-	free(tokens);
+	free_tokens(tokens);
 	return (result);
 }
 
