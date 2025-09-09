@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 18:29:36 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/07 20:41:15 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/09 17:48:44 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,6 @@ bool validate_scene(t_scene *scene)
 		return (false);
 	}
 	return (true);
-}
-
-int	count_tokens(char **tokens)
-{
-	int	i;
-
-	i = 0;
-	if (!tokens)
-		return (0);
-	while (tokens[i])
-		i++;
-	return (i);
 }
 
 void	error_exit(char *msg)
