@@ -1,0 +1,40 @@
+# Edge cases and testing scenarios
+# Order: ambient diffuse specular shininess [pattern_type pattern_color2 pattern_scale] [bump]
+# Ambient lighting
+A 0.15 255,255,255
+
+# Camera
+C 0,0,50 0,0,-1 90
+
+# Light
+L 0,30,30 0.7 255,255,255
+
+# Minimum values
+sp -30,0,0 10.0 255,0,0 0.0 0.0 0.0 1
+
+# Maximum values
+sp -15,0,0 10.0 0,255,0 1.0 1.0 1.0 1000
+
+# Default values (should work without explicit material options)
+sp 0,0,0 10.0 0,0,255
+
+# Partial material specification (only first parameter)
+sp 15,0,0 10.0 255,255,0 0.4
+
+# Partial material specification (first three parameters)
+sp 30,0,0 10.0 255,0,255 0.4 0.6 0.7
+
+# Pattern with minimal parameters (checkerboard with default color and scale)
+sp -30,15,0 8.0 128,255,128 0.1 0.9 0.9 200 1
+
+# Pattern with all parameters
+sp 0,15,0 8.0 128,128,255 0.3 0.8 0.5 80 2 255,255,128 2.5  # ambient diffuse specular shininess pattern_type pattern_color2 pattern_scale
+
+# Only bump enabled (default material + bump)
+sp 30,15,0 8.0 255,128,128 0.1 0.9 0.9 200 0 255,255,255 1.0 1  # ambient diffuse specular shininess pattern_type pattern_color2 pattern_scale bump
+
+# Complex object with everything - cylinder with gradient pattern and bump
+cy 0,-15,0 1,0,0 6.0 20.0 100,200,100 0.25 0.75 0.8 150 3 200,100,200 1.0 1  # ambient diffuse specular shininess pattern_type pattern_color2 pattern_scale bump
+
+# Plane for reference (basic material only)
+pl 0,-25,0 0,1,0 200,200,200 0.2 0.6 0.1 50

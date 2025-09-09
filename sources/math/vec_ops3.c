@@ -20,7 +20,7 @@ double		vec3_length(t_vec3 v)
     return (result);
 }
 
-double		vec3_length_squared(t_vec3 v)
+double		vec3_len_squared(t_vec3 v)
 {
     double  result;
 

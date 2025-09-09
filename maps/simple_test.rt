@@ -1,0 +1,31 @@
+# Simple test scene for debugging parse_material_options
+# Material order: ambient diffuse specular shininess [pattern_type pattern_color2 pattern_scale] [bump]
+# Ambient lighting
+A 0.2 255,255,255
+
+# Camera  
+C 0,0,50 0,0,-1 70
+
+# Light
+L 10,10,30 0.6 255,255,255
+
+# Test sphere with no material options (should use defaults)
+sp 0,0,0 20.0 255,100,100
+
+# Test sphere with one material option (ambient only)
+sp 0,25,0 15.0 100,255,100 0.5
+
+# Test sphere with basic material options (ambient diffuse)
+sp 25,0,0 15.0 100,100,255 0.3 0.8
+
+# Test sphere with pattern only (checkerboard with default second color)
+sp -25,0,0 15.0 255,255,100 0.1 0.9 0.9 200 1  # ambient diffuse specular shininess pattern_type
+
+# Test sphere with mixed options (pattern + custom lighting)
+sp 0,-25,0 15.0 255,100,255 0.3 0.7 0.8 200 0  # ambient diffuse specular shininess pattern_type
+
+# Test cone (BONUS) - apex axis angle height color [material_options]
+co 0,0,-10 0,1,0 30.0 20.0 255,255,0 0.2 0.8 0.6 150  # ambient diffuse specular shininess
+
+# Floor for reference
+pl 0,-30,0 0,1,0 150,150,150

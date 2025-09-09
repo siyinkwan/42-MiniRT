@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/08 16:01:57 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/09 18:26:53 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_material
 	double			specular;		// Specular reflection coefficient [0-1]
 	double			shininess;		// Specular exponent (higher = sharper highlights)
 	t_pattern_type	pattern_type;	// Which pattern to apply
-	t_vec3			pattern_color2;	// Second color for patterns (checkerboard, etc.)
+	t_vec3			p_color2;	// Second color for patterns (checkerboard, etc.)
 	double			pattern_scale;	// Size of pattern elements
 	bool			bump;
 }	t_material;
@@ -307,9 +307,10 @@ t_vec3		vec3_divide(t_vec3 v, double scalar);
 double		vec3_dot(t_vec3 a, t_vec3 b);
 t_vec3		vec3_cross(t_vec3 a, t_vec3 b);
 double		vec3_length(t_vec3 v);
-double		vec3_length_squared(t_vec3 v);
+double		vec3_len_squared(t_vec3 v);
 t_vec3		vec3_normalize(t_vec3 v);
 double		vec3_distance(t_vec3 a, t_vec3 b);
+bool		is_normalized(t_vec3 vec);
 
 
 /*
@@ -362,6 +363,29 @@ bool		parse_vec3(char *token, t_vec3 *vec);
 void		free_scene(t_scene *scene);
 t_scene		*init_scene(void);
 int			parse_scene(char *filename, t_scene *scene);
+bool		parse_line(char *line, t_scene *scene);
+
+// /*
+// ** Scene elements parsing
+// */
+bool		parse_ambient(t_scene *scene, char **tokens);
+bool		parse_camera(t_scene *scene, char **tokens);
+bool		parse_light(t_scene *scene, char **tokens);
+
+// /*
+// ** Object parsing
+// */
+bool		parse_sphere(t_scene *scene, char **tokens);
+bool		parse_plane(t_scene *scene, char **tokens);
+bool		parse_cylinder(t_scene *scene, char **tokens);
+bool		parse_cone(t_scene *scene, char **tokens);
+bool		parse_mtl_attr(t_material *material, char **tokens, int count, int index);
+
+// /*
+// ** Scene utilities
+// */
+bool		validate_scene(t_scene *scene);
+bool		validate_cone_params(t_cone *co, char **tokens, double angle_degrees);
 
 // /*
 // ** Rendering
