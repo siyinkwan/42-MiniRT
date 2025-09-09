@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/07 20:07:57 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/08 16:01:57 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_material
 	t_pattern_type	pattern_type;	// Which pattern to apply
 	t_vec3			pattern_color2;	// Second color for patterns (checkerboard, etc.)
 	double			pattern_scale;	// Size of pattern elements
+	bool			bump;
 }	t_material;
 
 /*
