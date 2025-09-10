@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 18:29:36 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/09 17:48:44 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/10 14:24:44 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,24 @@ void	free_tokens(char **tokens)
 
 void	free_scene(t_scene *scene)
 {
-	
+	t_object	*current;
+	t_object	*next;
+
+	if (!scene)
+		return ;
+	current = scene->objects;
+	while (current)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	scene->objects = NULL;
+	if (scene->lights)
+	{
+		free(scene->lights);
+		scene->lights = NULL;
+	}
+	scene->light_count = 0;
+	free(scene);
 }

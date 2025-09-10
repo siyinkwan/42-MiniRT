@@ -6,11 +6,20 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:40:21 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/05 13:28:28 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/10 16:16:14 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+typedef struct s_hit
+{
+	bool		hit;		// Did intersection occur?
+	double		t;			// Distance parameter along ray
+	t_vec3		point;		// 3D intersection point
+	t_vec3		normal;		// Surface normal at intersection (normalized)
+	t_material	*material;	// Pointer to intersected object's material
+	t_object	*object;	// Pointer to intersected object
+}	t_hit;
 
 void	put_pixel(t_minirt *minirt, int x, int y, int color)
 {
@@ -24,6 +33,10 @@ void	put_pixel(t_minirt *minirt, int x, int y, int color)
 		pixel_addr = minirt->img_data + y * minirt->line_length + x * bytes_per_pixel;
 		*(unsigned int*)pixel_addr = color;
 	}
+}
+int	vec3_to_rgb(t_vec3 color)
+{
+	
 }
 
 void	render_scene(t_minirt *minirt)
@@ -52,3 +65,4 @@ void	render_scene(t_minirt *minirt)
 		y = y + 1.0;
 	}
 }
+
