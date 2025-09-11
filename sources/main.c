@@ -39,7 +39,6 @@ static int	init_minirt(t_minirt *minirt, char *filename)
 	}
 	if (parse_scene(filename, temp_scene) < 0)
 	{
-		ft_putendl_fd("Error: Failed to parse scene", 2);
 		free_scene(temp_scene);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 17:47:29 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/09 18:25:26 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/11 22:42:09 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ int	count_tokens(char **tokens)
 	return (i);
 }
 
-bool	is_normalized(t_vec3 vec)
-{
-	double	length_squared;
-
-	length_squared = vec3_len_squared(vec);
-	return (fabs(length_squared - 1.0) < EPSILON);
-}
-
 bool	validate_cone_params(t_cone *co, char **tokens, double angle_degrees)
 {
 	if (!parse_vec3(tokens[1], &co->apex) || !parse_vec3(tokens[2], &co->axis)
@@ -41,4 +33,21 @@ bool	validate_cone_params(t_cone *co, char **tokens, double angle_degrees)
 		return (false);
 	co->angle = angle_degrees * PI / 180.0;
 	return (true);
+}
+
+bool	has_invalid_chars(char *line)
+{
+    int	i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (!ft_isdigit(line[i]) && !ft_isalpha(line[i])
+            && line[i] != ' ' && line[i] != '\t' && line[i] != ','
+            && line[i] != '.' && line[i] != '-' && line[i] != '+'
+			&& line[i] != '\n')
+            return (true);
+        i++;
+    }
+    return (false);
 }

@@ -37,6 +37,15 @@ t_vec3		vec3_normalize(t_vec3 v)
     result.z = v.z / len;
     return (result);
 }
+
+bool	is_normalized(t_vec3 vec)
+{
+	double	length_squared;
+
+	length_squared = vec3_len_squared(vec);
+	return (fabs(length_squared - 1.0) < EPSILON);
+}
+
 double		vec3_distance(t_vec3 a, t_vec3 b)
 {
     double  result;

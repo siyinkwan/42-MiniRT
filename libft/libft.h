@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:32:28 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/06 18:47:18 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/11 18:39:44 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+
+int				ft_strcmp(const char *s1, const char *s2);
 
 char			*ft_strnstr(const char *big, const char *little, size_t len);
 

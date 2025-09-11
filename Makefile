@@ -6,7 +6,7 @@
 #    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/09/09 17:55:48 by sguan            ###   ########.fr        #
+#    Updated: 2025/09/11 18:52:12 by sguan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,20 @@ SRCS = sources/main.c \
 	sources/intersection/intersect_scene.c \
 	sources/camera/camera_setup.c \
 	sources/camera/ray_generation.c \
-	sources/render/renderer.c \
 	sources/mlx/mlx_init.c \
 	sources/scene/scene_parser.c \
 	sources/scene/parse_objects.c \
 	sources/scene/parse_elements.c \
 	sources/scene/scene_utils.c \
 	sources/scene/parse_utils.c \
+	sources/render/renderer.c \
+#     sources/materials/patterns.c \
+#     sources/materials/bump_mapping.c \
+# 	sources/lighting/ambient.c \
+#     sources/lighting/diffuse.c \
+#     sources/lighting/specular.c \
+#     sources/lighting/shadows.c \
+#     sources/lighting/light.c \
 
 OBJS = $(SRCS:sources/%.c=$(OBJDIR)/%.o)
 

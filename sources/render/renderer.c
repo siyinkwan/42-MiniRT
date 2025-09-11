@@ -6,20 +6,11 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:40:21 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/10 16:16:14 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/11 15:57:13 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-typedef struct s_hit
-{
-	bool		hit;		// Did intersection occur?
-	double		t;			// Distance parameter along ray
-	t_vec3		point;		// 3D intersection point
-	t_vec3		normal;		// Surface normal at intersection (normalized)
-	t_material	*material;	// Pointer to intersected object's material
-	t_object	*object;	// Pointer to intersected object
-}	t_hit;
 
 void	put_pixel(t_minirt *minirt, int x, int y, int color)
 {
@@ -34,9 +25,18 @@ void	put_pixel(t_minirt *minirt, int x, int y, int color)
 		*(unsigned int*)pixel_addr = color;
 	}
 }
+
 int	vec3_to_rgb(t_vec3 color)
 {
-	
+	int	r;
+	int	g;
+	int	b;
+
+	r = (int) color.x;
+	g = (int) color.y;
+	b = (int) color.z;
+
+	return (r << 16 | g << 8 | b);
 }
 
 void	render_scene(t_minirt *minirt)
@@ -56,13 +56,12 @@ void	render_scene(t_minirt *minirt)
 			ray = generate_ray(&minirt->scene.camera, x, y, minirt->width, minirt->height);
 			hit = intersect_scene(ray, &minirt->scene);
 			if (hit.hit)
-				color = 0xFFFDD0;
+				color = vec3_to_rgb(hit.material->color);
 			else
-				color = 0x000000;
+				color = vec3_to_rgb(minirt->scene.background);
 			put_pixel(minirt, (int)x, (int)y, color);
 			x = x + 1.0;
 		}
 		y = y + 1.0;
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:37:26 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/07 20:39:44 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/11 22:57:32 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,33 +84,51 @@ bool	parse_vec3(char *token, t_vec3 *vec)
 	return (true);
 }
 
+static bool	dispatch_parser(char *id, t_scene *scene, char **tokens)
+{
+    if (ft_strcmp(id, "A") == 0)
+        return (parse_ambient(scene, tokens));
+    if (ft_strcmp(id, "C") == 0)
+        return (parse_camera(scene, tokens));
+    if (ft_strcmp(id, "L") == 0)
+        return (parse_light(scene, tokens));
+    if (ft_strcmp(id, "sp") == 0)
+        return (parse_sphere(scene, tokens));
+    if (ft_strcmp(id, "pl") == 0)
+        return (parse_plane(scene, tokens));
+    if (ft_strcmp(id, "cy") == 0)
+        return (parse_cylinder(scene, tokens));
+    if (ft_strcmp(id, "co") == 0)
+        return (parse_cone(scene, tokens));
+    printf("Error: Unknown identifier '%s'\n", id);
+    return (false);
+}
+
 bool	parse_line(char *line, t_scene *scene)
 {
 	char	**tokens;
+	char	*comment_pos;
 	bool	result;
+	int		len;
 
 	if (!line || line[0] == '#' || line[0] == '\0')
 		return (true);
-	result = false;
+	comment_pos = ft_strchr(line, '#');
+	if (comment_pos)
+		*comment_pos = '\0';
+	len = ft_strlen(line);
+	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\t' 
+		|| line[len - 1] == '\n' || line[len - 1] == '\r'))
+		line[--len] = '\0';
+	if (len == 0)
+		return (true);
+	if (has_invalid_chars(line))
+		return (printf("Error: Invalid characters in line\n"), false);
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0])
 		return (free_tokens(tokens), false);
-    if (ft_strcmp(tokens[0], "A") == 0)
-        result = parse_ambient(scene, tokens);
-    else if (ft_strcmp(tokens[0], "C") == 0)
-        result = parse_camera(scene, tokens);
-    else if (ft_strcmp(tokens[0], "L") == 0)
-        result = parse_light(scene, tokens);
-    else if (ft_strcmp(tokens[0], "sp") == 0)
-        result = parse_sphere(scene, tokens);
-    else if (ft_strcmp(tokens[0], "pl") == 0)
-        result = parse_plane(scene, tokens);
-    else if (ft_strcmp(tokens[0], "cy") == 0)
-        result = parse_cylinder(scene, tokens);
-    else if (ft_strcmp(tokens[0], "co") == 0)
-        result = parse_cone(scene, tokens);
-	free_tokens(tokens);
-	return (result);
+	result = dispatch_parser(tokens[0], scene, tokens);
+	return (free_tokens(tokens), result);
 }
 
 int	parse_scene(char *filename, t_scene *scene)

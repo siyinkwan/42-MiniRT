@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/09 18:26:53 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/11 20:10:14 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,9 +320,9 @@ t_ray		ray_create(t_vec3 origin, t_vec3 direction);
 bool		ray_valid_t(t_ray ray, double t);
 t_vec3		ray_at(t_ray ray, double t);
 
-// /*
-// ** Object intersection functions
-// */
+/*
+** Object intersection functions
+*/
 double		calculate_hit_plane(t_ray ray, t_plane plane);
 bool		in_circle(double t, t_ray ray, t_plane plane, double radius);
 t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
@@ -331,30 +331,15 @@ t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
 t_hit		intersect_cone(t_ray ray, t_cone cone);
 t_hit		intersect_scene(t_ray ray, t_scene *scene);
 
-// /*
-// ** Lighting and shading
-// */
-// t_vec3		calculate_lighting(t_hit hit, t_scene *scene, t_vec3 view_dir);
-// t_vec3		apply_ambient(t_material *material, t_ambient ambient);
-// t_vec3		apply_diffuse(t_material *material, t_vec3 light_dir, t_vec3 normal, t_vec3 light_color);
-// t_vec3		apply_specular(t_material *material, t_vec3 light_dir, t_vec3 view_dir, t_vec3 normal, t_vec3 light_color);
-// bool		in_shadow(t_vec3 point, t_vec3 light_pos, t_scene *scene);
-
-// /*
-// ** Pattern generation (bonus)
-// */
-// t_vec3		apply_pattern(t_material *material, t_vec3 point);
-// t_vec3		checkerboard_pattern(t_vec3 point, t_vec3 color1, t_vec3 color2, double scale);
-
-// /*
-// ** Camera and ray generation
-// */
+/*
+** Camera and ray generation
+*/
 void		camera_setup(t_camera *camera);
 t_ray		generate_ray(t_camera *camera, double pixel_x, double pixel_y, int width, int height);
 
-// /*
-// ** Scene parsing
-// */
+/*
+** Scene parsing utilities
+*/
 void		error_exit(char *msg);
 void		free_tokens(char **tokens);
 int			count_tokens(char **tokens);
@@ -362,58 +347,49 @@ bool		parse_color(char *token, t_vec3 *color);
 bool		parse_vec3(char *token, t_vec3 *vec);
 void		free_scene(t_scene *scene);
 t_scene		*init_scene(void);
+char		*strip_comment(char *line);
+bool		has_invalid_chars(char *line);
+bool		validate_cone_params(t_cone *co, char **tokens, double angle_degrees);
+
+/*
+** Scene parsing
+*/
 int			parse_scene(char *filename, t_scene *scene);
 bool		parse_line(char *line, t_scene *scene);
 
-// /*
-// ** Scene elements parsing
-// */
+/*
+** Scene elements parsing
+*/
 bool		parse_ambient(t_scene *scene, char **tokens);
 bool		parse_camera(t_scene *scene, char **tokens);
 bool		parse_light(t_scene *scene, char **tokens);
 
-// /*
-// ** Object parsing
-// */
+/*
+** Object parsing
+*/
 bool		parse_sphere(t_scene *scene, char **tokens);
 bool		parse_plane(t_scene *scene, char **tokens);
 bool		parse_cylinder(t_scene *scene, char **tokens);
 bool		parse_cone(t_scene *scene, char **tokens);
 bool		parse_mtl_attr(t_material *material, char **tokens, int count, int index);
 
-// /*
-// ** Scene utilities
-// */
+/*
+** Scene validation
+*/
 bool		validate_scene(t_scene *scene);
-bool		validate_cone_params(t_cone *co, char **tokens, double angle_degrees);
 
-// /*
-// ** Rendering
-// */
+/*
+** Rendering
+*/
 void		put_pixel(t_minirt *minirt, int x, int y, int color);
 void		render_scene(t_minirt *minirt);
-// int			trace_ray(t_ray ray, t_scene *scene);
+int			vec3_to_rgb(t_vec3 color);
 
-// /*
-// ** MinilibX integration
-// */
+/*
+** MinilibX integration
+*/
 int			init_mlx(t_minirt *minirt);
 void		display_image(t_minirt *minirt);
 int			close_window(t_minirt *minirt);
-// int			rgb_to_int(t_vec3 color);
-// t_vec3		int_to_rgb(int color);
-
-// /*
-// ** Event handling
-// */
-// int			key_hook(int keycode, t_minirt *minirt);
-// int			close_hook(t_minirt *minirt);
-
-// /*
-// ** Utility functions
-// */
-// double		clamp(double value, double min, double max);
-// double		degrees_to_radians(double degrees);
-// double		radians_to_degrees(double radians);
 
 #endif
