@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 14:06:08 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 19:51:23 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/14 22:56:43 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,23 @@ t_vec3	calculate_specular(t_scene *scene, t_hit *hit)
 	t_vec3	specular;
 	t_vec3	light_dir;
 	t_vec3	view_dir;
-	double	spec_intensity;
+	double	s;
 	int		i;
 
-	specular = vec3_create(0, 0 , 0);
+	specular = vec3_create(0, 0, 0);
+	view_dir = vec3_normalize(vec3_subtract(scene->camera.position, hit->point));
 	i = 0;
 	while (i < scene->light_count)
 	{
 		light_dir = vec3_normalize(vec3_subtract(scene->lights[i].position, hit->point));
-		view_dir = vec3_normalize(vec3_subtract(scene->camera.position, hit->point));
-		spec_intensity = pow(fmax(0, vec3_dot(reflect(light_dir, hit->normal), view_dir)), 
-			hit->material->shininess);
-		specular.x = specular.x + hit->material->specular * spec_intensity
-			* scene->lights[i].color.x * scene->lights[i].brightness; 
-		specular.y = specular.y + hit->material->specular * spec_intensity
-			* scene->lights[i].color.y * scene->lights[i].brightness;
-		specular.z = specular.z + hit->material->specular * spec_intensity
-			* scene->lights[i].color.z * scene->lights[i].brightness; 
+		if (vec3_dot(hit->normal, light_dir) > 0.0
+			&& vec3_dot(hit->normal, view_dir) > 0.0)
+		{
+			s = pow(fmax(0.0, vec3_dot(reflect(light_dir, hit->normal), view_dir)),
+					hit->material->shininess);
+			s *= hit->material->specular * scene->lights[i].brightness;
+			specular = vec3_add(specular, vec3_scale(scene->lights[i].color, s));
+		}
 		i++;
 	}
 	return (specular);
