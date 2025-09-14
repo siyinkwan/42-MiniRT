@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 16:01:03 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/09 18:25:20 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/14 19:15:32 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	parse_mtl_attr(t_material *material, char **tokens,
 	material->specular = 0.9;
 	material->shininess = 200.0;
 	material->pattern_type = PATTERN_SOLID;
-	material->p_color2 = vec3_create(255, 255, 255);
+	material->p_color2 = vec3_create(1.0, 1.0, 1.0);
 	material->pattern_scale = 1.0;
 	material->bump = false;
 	if (index < count)

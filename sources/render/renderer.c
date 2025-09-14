@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:40:21 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/11 15:57:13 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/14 19:50:05 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,23 @@ int	vec3_to_rgb(t_vec3 color)
 	int	g;
 	int	b;
 
-	r = (int) color.x;
-	g = (int) color.y;
-	b = (int) color.z;
-
+	r = (int)(fmin(1.0, fmax(0.0, color.x)) * 255);
+	g = (int)(fmin(1.0, fmax(0.0, color.y)) * 255);
+	b = (int)(fmin(1.0, fmax(0.0, color.z)) * 255);
 	return (r << 16 | g << 8 | b);
+}
+int	calculate_pixel_color(t_scene *scene, t_hit *hit)
+{
+	t_vec3	ambient;
+	t_vec3	diffuse;
+	t_vec3	specular;
+	t_vec3	color;
+
+	ambient = calculate_ambient(scene, hit->material);
+	diffuse = calculate_diffuse(scene, hit);
+	specular = calculate_specular(scene, hit);
+	color = vec3_add(ambient, vec3_add(diffuse, specular));
+	return (vec3_to_rgb(color));
 }
 
 void	render_scene(t_minirt *minirt)
@@ -50,18 +62,18 @@ void	render_scene(t_minirt *minirt)
 	y = 0.0;
 	while (y < minirt->height)
 	{
-		x = 0.0;
+		x = 0;
 		while (x < minirt->width)
 		{
 			ray = generate_ray(&minirt->scene.camera, x, y, minirt->width, minirt->height);
 			hit = intersect_scene(ray, &minirt->scene);
 			if (hit.hit)
-				color = vec3_to_rgb(hit.material->color);
+				color = calculate_pixel_color(&minirt->scene, &hit);
 			else
 				color = vec3_to_rgb(minirt->scene.background);
-			put_pixel(minirt, (int)x, (int)y, color);
-			x = x + 1.0;
+			put_pixel(minirt, x, y, color);
+			x++;
 		}
-		y = y + 1.0;
+		y++;
 	}
 }

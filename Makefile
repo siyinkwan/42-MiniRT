@@ -6,7 +6,7 @@
 #    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/09/11 18:52:12 by sguan            ###   ########.fr        #
+#    Updated: 2025/09/14 14:22:33 by sguan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,16 +23,17 @@ SRCS = sources/main.c \
 	sources/intersection/intersect_plane.c \
 	sources/intersection/intersect_cylinder.c \
 	sources/intersection/intersect_cone.c \
-	sources/intersection/intersect_scene.c \
-	sources/camera/camera_setup.c \
+	sources/intersection/intersect.c \
+	sources/camera/camera.c \
 	sources/camera/ray_generation.c \
 	sources/mlx/mlx_init.c \
-	sources/scene/scene_parser.c \
+	sources/scene/scene.c \
 	sources/scene/parse_objects.c \
 	sources/scene/parse_elements.c \
 	sources/scene/scene_utils.c \
 	sources/scene/parse_utils.c \
 	sources/render/renderer.c \
+	sources/materials/material.c \
 #     sources/materials/patterns.c \
 #     sources/materials/bump_mapping.c \
 # 	sources/lighting/ambient.c \

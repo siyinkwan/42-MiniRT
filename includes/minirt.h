@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/11 20:10:14 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/14 19:50:20 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,11 +379,20 @@ bool		parse_mtl_attr(t_material *material, char **tokens, int count, int index);
 bool		validate_scene(t_scene *scene);
 
 /*
+** Lighting calculations
+*/
+t_vec3		calculate_ambient(t_scene *scene, t_material *material);
+t_vec3		calculate_diffuse(t_scene *scene, t_hit *hit);
+t_vec3		calculate_specular(t_scene *scene, t_hit *hit);
+t_vec3		reflect(t_vec3 light_dir, t_vec3 normal);
+
+/*
 ** Rendering
 */
 void		put_pixel(t_minirt *minirt, int x, int y, int color);
 void		render_scene(t_minirt *minirt);
 int			vec3_to_rgb(t_vec3 color);
+int			get_pixel_color(t_scene *scene, t_hit *hit);  // Add this if you keep the function
 
 /*
 ** MinilibX integration
