@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 14:06:08 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 22:56:43 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/15 22:47:38 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,35 @@ t_vec3	reflect(t_vec3 light_dir, t_vec3 normal)
 	t_vec3	reflect_dir;
 	t_vec3	projection;
 
-	projection =  vec3_scale(normal, vec3_dot(light_dir, normal));
+	projection = vec3_scale(normal, vec3_dot(light_dir, normal));
 	reflect_dir = vec3_subtract(light_dir, vec3_scale(projection, 2));
 	return (reflect_dir);
 }
 
 t_vec3	calculate_specular(t_scene *scene, t_hit *hit)
 {
-	t_vec3	specular;
-	t_vec3	light_dir;
-	t_vec3	view_dir;
+	t_vec3	spec;
+	t_vec3	l_dir;
+	t_vec3	v_dir;
 	double	s;
 	int		i;
 
-	specular = vec3_create(0, 0, 0);
-	view_dir = vec3_normalize(vec3_subtract(scene->camera.position, hit->point));
+	spec = vec3_create(0, 0, 0);
+	v_dir = vec3_normalize(vec3_subtract(scene->camera.position, hit->point));
 	i = 0;
 	while (i < scene->light_count)
 	{
-		light_dir = vec3_normalize(vec3_subtract(scene->lights[i].position, hit->point));
-		if (vec3_dot(hit->normal, light_dir) > 0.0
-			&& vec3_dot(hit->normal, view_dir) > 0.0)
+		l_dir = vec3_normalize(vec3_subtract(scene->lights[i].pos, hit->point));
+		if (vec3_dot(hit->normal, l_dir) > 0.0
+			&& vec3_dot(hit->normal, v_dir) > 0.0
+			&& !is_in_shadow(scene, hit, scene->lights[i].pos))
 		{
-			s = pow(fmax(0.0, vec3_dot(reflect(light_dir, hit->normal), view_dir)),
+			s = pow(fmax(0.0, vec3_dot(reflect(l_dir, hit->normal), v_dir)),
 					hit->material->shininess);
 			s *= hit->material->specular * scene->lights[i].brightness;
-			specular = vec3_add(specular, vec3_scale(scene->lights[i].color, s));
+			spec = vec3_add(spec, vec3_scale(scene->lights[i].color, s));
 		}
 		i++;
 	}
-	return (specular);
+	return (spec);
 }
