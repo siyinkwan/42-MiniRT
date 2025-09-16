@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 19:50:20 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/16 19:08:23 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #endif
 
 #define EPSILON 1e-9
+#define BUMP_EPSILON 1e-4
 /* ************************************************************************** */
 /*                              MATHEMATICAL TYPES                           */
 /* ************************************************************************** */
@@ -132,7 +133,7 @@ typedef struct	s_viewport
 */
 typedef struct s_light
 {
-	t_vec3	position;		// Light location in world space
+	t_vec3	pos;		// Light location in world space
 	t_vec3	color;			// Light color (RGB values 0-1)
 	double	brightness;		// Light intensity [0-1]
 }	t_light;
@@ -306,6 +307,7 @@ t_vec3		vec3_scale(t_vec3 v, double scalar);
 t_vec3		vec3_divide(t_vec3 v, double scalar);
 double		vec3_dot(t_vec3 a, t_vec3 b);
 t_vec3		vec3_cross(t_vec3 a, t_vec3 b);
+t_vec3		vec3_mul(t_vec3 a, t_vec3 b);
 double		vec3_length(t_vec3 v);
 double		vec3_len_squared(t_vec3 v);
 t_vec3		vec3_normalize(t_vec3 v);
@@ -385,7 +387,7 @@ t_vec3		calculate_ambient(t_scene *scene, t_material *material);
 t_vec3		calculate_diffuse(t_scene *scene, t_hit *hit);
 t_vec3		calculate_specular(t_scene *scene, t_hit *hit);
 t_vec3		reflect(t_vec3 light_dir, t_vec3 normal);
-
+bool		is_in_shadow(t_scene *scene, t_hit *hit, t_vec3 light_pos);
 /*
 ** Rendering
 */

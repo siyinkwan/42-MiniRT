@@ -28,3 +28,13 @@ t_vec3		vec3_cross(t_vec3 a, t_vec3 b)
     result.z = (a.x * b.y) - (a.y * b.x);
     return (result);
 }
+
+t_vec3		vec3_mul(t_vec3 a, t_vec3 b)
+{
+	t_vec3	result;
+
+	result.x = a.x * b.x;
+	result.y = a.y * b.y;
+	result.z = a.z * b.z;
+	return (result);
+}

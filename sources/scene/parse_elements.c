@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 20:29:17 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/09 17:50:36 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/15 22:13:46 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	parse_light(t_scene *scene, char **tokens)
 	if (!new_lights)
 		return (printf("Error: Memory allocation failed\n"), false);
 	add_light(scene, new_lights);
-	new_lights[scene->light_count].position = pos;
+	new_lights[scene->light_count].pos = pos;
 	new_lights[scene->light_count].brightness = brightness;
 	new_lights[scene->light_count].color = color;
 	free(scene->lights);
