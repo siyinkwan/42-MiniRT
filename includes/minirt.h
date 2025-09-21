@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/16 19:08:23 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/18 18:20:30 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #endif
 
 #define EPSILON 1e-9
-#define BUMP_EPSILON 1e-4
+#define B_EPSILON 1e-4
 /* ************************************************************************** */
 /*                              MATHEMATICAL TYPES                           */
 /* ************************************************************************** */
@@ -137,6 +137,14 @@ typedef struct s_light
 	t_vec3	color;			// Light color (RGB values 0-1)
 	double	brightness;		// Light intensity [0-1]
 }	t_light;
+
+typedef struct s_bump
+{
+	double	u;
+	double	v;
+	t_vec3	T;
+	t_vec3	B;
+}	t_bump;
 
 /* ************************************************************************** */
 /*                             GEOMETRIC OBJECTS                             */
