@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 20:11:24 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 14:19:52 by sguan            ###   ########.fr       */
+/*   Updated: 2025/10/01 17:52:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ t_hit	intersect_object(t_ray ray, t_object *object)
             hit.material = &object->data.cylinder.material;
         else if (object->type == OBJECT_CONE)
             hit.material = &object->data.cone.material;
+        if (hit.material->bump)
+            init_bump_for_hit(&hit, object);
+        else
+            hit.bump = NULL;
     }
     return (hit);
 }

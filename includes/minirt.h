@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/18 18:20:30 by sguan            ###   ########.fr       */
+/*   Updated: 2025/09/27 23:18:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ typedef struct s_hit
 	t_vec3		normal;		// Surface normal at intersection (normalized)
 	t_material	*material;	// Pointer to intersected object's material
 	t_object	*object;	// Pointer to intersected object
+	t_bump		*bump;
 }	t_hit;
 
 /*
