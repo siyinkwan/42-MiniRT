@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 15:40:21 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 19:50:05 by sguan            ###   ########.fr       */
+/*   Updated: 2025/10/29 14:03:52 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	vec3_to_rgb(t_vec3 color)
 	b = (int)(fmin(1.0, fmax(0.0, color.z)) * 255);
 	return (r << 16 | g << 8 | b);
 }
+
 int	calculate_pixel_color(t_scene *scene, t_hit *hit)
 {
 	t_vec3	ambient;

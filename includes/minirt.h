@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/27 23:18:47 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 13:21:42 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,5 +411,13 @@ int			get_pixel_color(t_scene *scene, t_hit *hit);  // Add this if you keep the 
 int			init_mlx(t_minirt *minirt);
 void		display_image(t_minirt *minirt);
 int			close_window(t_minirt *minirt);
+
+/*
+** Bump mapping functions
+*/
+double		bump_func(double u, double v);
+void		compute_uv(t_hit *hit, double *u, double *v);
+void		compute_tangent_space(t_hit *hit, t_vec3 *T, t_vec3 *B);
+t_vec3		apply_bump(t_hit *hit);
 
 #endif
