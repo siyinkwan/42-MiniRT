@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/10/28 13:21:42 by sguan            ###   ########.fr       */
+/*   Updated: 2025/10/29 16:38:28 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,8 @@ typedef struct s_ray
 */
 typedef enum e_pattern_type
 {
-	PATTERN_SOLID,			// Single color
-	PATTERN_CHECKERBOARD,	// Alternating squares
-	PATTERN_STRIPES,		// Parallel stripes (bonus)
-	PATTERN_GRADIENT		// Color gradient (bonus)
+    PATTERN_SOLID,      // No pattern, use solid color
+    PATTERN_CHECKER     // Checkerboard pattern
 }	t_pattern_type;
 
 /*
@@ -85,17 +83,18 @@ typedef enum e_pattern_type
 ** - Diffuse: Matte reflection (depends on surface normal and light direction)
 ** - Specular: Shiny reflection (depends on viewing angle)
 */
+
 typedef struct s_material
 {
-	t_vec3			color;			// Base color (RGB values 0-1)
-	double			ambient;		// Ambient reflection coefficient [0-1]
-	double			diffuse;		// Diffuse reflection coefficient [0-1]
-	double			specular;		// Specular reflection coefficient [0-1]
-	double			shininess;		// Specular exponent (higher = sharper highlights)
-	t_pattern_type	pattern_type;	// Which pattern to apply
-	t_vec3			p_color2;	// Second color for patterns (checkerboard, etc.)
-	double			pattern_scale;	// Size of pattern elements
-	bool			bump;
+    t_vec3			color;
+    double			ambient;
+    double			diffuse;
+    double			specular;
+    double			shininess;
+    bool			bump;
+    t_pattern_type	pattern_type;   
+    t_vec3			pattern_color;
+    double			pattern_scale;
 }	t_material;
 
 /*
@@ -397,13 +396,15 @@ t_vec3		calculate_diffuse(t_scene *scene, t_hit *hit);
 t_vec3		calculate_specular(t_scene *scene, t_hit *hit);
 t_vec3		reflect(t_vec3 light_dir, t_vec3 normal);
 bool		is_in_shadow(t_scene *scene, t_hit *hit, t_vec3 light_pos);
+
 /*
 ** Rendering
 */
 void		put_pixel(t_minirt *minirt, int x, int y, int color);
 void		render_scene(t_minirt *minirt);
 int			vec3_to_rgb(t_vec3 color);
-int			get_pixel_color(t_scene *scene, t_hit *hit);  // Add this if you keep the function
+t_vec3		calculate_final_color(t_scene *scene, t_hit *hit);
+t_vec3		trace_ray(t_scene *scene, t_ray ray, int depth);
 
 /*
 ** MinilibX integration
@@ -419,5 +420,11 @@ double		bump_func(double u, double v);
 void		compute_uv(t_hit *hit, double *u, double *v);
 void		compute_tangent_space(t_hit *hit, t_vec3 *T, t_vec3 *B);
 t_vec3		apply_bump(t_hit *hit);
+
+/*
+** Pattern functions
+*/
+t_vec3		checkerboard_pattern(double u, double v, t_vec3 color1, t_vec3 color2);
+t_vec3		apply_pattern(t_hit *hit);
 
 #endif

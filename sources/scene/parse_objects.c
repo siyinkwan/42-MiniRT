@@ -6,41 +6,11 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 16:01:03 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 19:15:32 by sguan            ###   ########.fr       */
+/*   Updated: 2025/10/29 17:25:39 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-bool	parse_mtl_attr(t_material *material, char **tokens,
-			int count, int index)
-{
-	material->ambient = 0.1;
-	material->diffuse = 0.9;
-	material->specular = 0.9;
-	material->shininess = 200.0;
-	material->pattern_type = PATTERN_SOLID;
-	material->p_color2 = vec3_create(1.0, 1.0, 1.0);
-	material->pattern_scale = 1.0;
-	material->bump = false;
-	if (index < count)
-		material->ambient = ft_atof(tokens[index++]);
-	if (index < count)
-		material->diffuse = ft_atof(tokens[index++]);
-	if (index < count)
-		material->specular = ft_atof(tokens[index++]);
-	if (index < count)
-		material->shininess = ft_atof(tokens[index++]);
-	if (index < count)
-		material->pattern_type = (t_pattern_type)ft_atoi(tokens[index++]);
-	if (index < count && !parse_color(tokens[index++], &material->p_color2))
-		return (false);
-	if (index < count)
-		material->pattern_scale = ft_atof(tokens[index++]);
-	if (index < count)
-		material->bump = ft_atoi(tokens[index]);
-	return (true);
-}
 
 bool	parse_sphere(t_scene *scene, char **tokens)
 {
@@ -65,7 +35,7 @@ bool	parse_sphere(t_scene *scene, char **tokens)
 	new_obj->data.sphere.radius = diameter / 2.0;
 	new_obj->data.sphere.material.color = color;
 	if (!parse_mtl_attr(&new_obj->data.sphere.material, tokens, count, 4))
-		return (printf("Error: Invalid material options\n"), false);
+		return (free(new_obj), printf("Error: Invalid material options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);
@@ -93,7 +63,7 @@ bool	parse_plane(t_scene *scene, char **tokens)
 	new_obj->data.plane.normal = normal;
 	new_obj->data.plane.material.color = color;
 	if (!parse_mtl_attr(&new_obj->data.plane.material, tokens, count, 4))
-		return (printf("Error: Invalid material options\n"), false);
+		return (free(new_obj), printf("Error: Invalid material options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);
@@ -122,7 +92,7 @@ bool	parse_cylinder(t_scene *scene, char **tokens)
 	new_obj->data.cylinder.height = cyl.height;
 	new_obj->data.cylinder.material.color = cyl.material.color;
 	if (!parse_mtl_attr(&new_obj->data.cylinder.material, tokens, count, 6))
-		return (printf("Error: Invalid material options\n"), false);
+		return (free(new_obj), printf("Error: Invalid material options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);
@@ -148,7 +118,7 @@ bool	parse_cone(t_scene *scene, char **tokens)
 	new_obj->type = OBJECT_CONE;
 	new_obj->data.cone = co;
 	if (!parse_mtl_attr(&new_obj->data.cone.material, tokens, count, 6))
-		return (printf("Error: Invalid material options\n"), false);
+		return (free(new_obj), printf("Error: Invalid material options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);

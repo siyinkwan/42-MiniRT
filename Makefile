@@ -6,7 +6,7 @@
 #    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/09/14 14:22:33 by sguan            ###   ########.fr        #
+#    Updated: 2025/10/29 17:33:37 by sguan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,32 +15,33 @@ LIBFT_DIR = ./libft
 OBJDIR = objects
 
 SRCS = sources/main.c \
-	sources/math/ray_ops.c \
-	sources/math/vec_ops.c \
-	sources/math/vec_ops2.c \
-	sources/math/vec_ops3.c \
-	sources/intersection/intersect_sphere.c \
-	sources/intersection/intersect_plane.c \
-	sources/intersection/intersect_cylinder.c \
-	sources/intersection/intersect_cone.c \
-	sources/intersection/intersect.c \
-	sources/camera/camera.c \
-	sources/camera/ray_generation.c \
-	sources/mlx/mlx_init.c \
-	sources/scene/scene.c \
-	sources/scene/parse_objects.c \
-	sources/scene/parse_elements.c \
-	sources/scene/scene_utils.c \
-	sources/scene/parse_utils.c \
-	sources/render/renderer.c \
-	sources/materials/material.c \
-#     sources/materials/patterns.c \
-#     sources/materials/bump_mapping.c \
-# 	sources/lighting/ambient.c \
-#     sources/lighting/diffuse.c \
-#     sources/lighting/specular.c \
-#     sources/lighting/shadows.c \
-#     sources/lighting/light.c \
+    sources/math/ray_ops.c \
+    sources/math/vec_ops.c \
+    sources/math/vec_ops2.c \
+    sources/math/vec_ops3.c \
+    sources/intersection/intersect_sphere.c \
+    sources/intersection/intersect_plane.c \
+    sources/intersection/intersect_cylinder.c \
+    sources/intersection/intersect_cone.c \
+    sources/intersection/intersect.c \
+    sources/camera/camera.c \
+    sources/camera/ray_generation.c \
+    sources/mlx/mlx_init.c \
+    sources/scene/scene.c \
+    sources/scene/parse_objects.c \
+    sources/scene/parse_elements.c \
+    sources/scene/scene_utils.c \
+    sources/scene/parse_utils.c \
+    sources/scene/parse_material_attributes.c \
+    sources/render/renderer.c \
+    sources/materials/material.c \
+    sources/materials/patterns.c \
+    sources/materials/bump_mapping.c \
+    sources/lighting/ambient.c \
+    sources/lighting/diffuse.c \
+    sources/lighting/specular.c \
+    sources/lighting/shadows.c \
+    sources/lighting/light.c
 
 OBJS = $(SRCS:sources/%.c=$(OBJDIR)/%.o)
 
