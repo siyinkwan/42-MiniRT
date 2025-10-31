@@ -6,7 +6,7 @@
 #    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/10/29 17:33:37 by sguan            ###   ########.fr        #
+#    Updated: 2025/10/31 13:54:20 by sguan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,14 +34,12 @@ SRCS = sources/main.c \
     sources/scene/parse_utils.c \
     sources/scene/parse_material_attributes.c \
     sources/render/renderer.c \
-    sources/materials/material.c \
     sources/materials/patterns.c \
     sources/materials/bump_mapping.c \
     sources/lighting/ambient.c \
     sources/lighting/diffuse.c \
     sources/lighting/specular.c \
-    sources/lighting/shadows.c \
-    sources/lighting/light.c
+    sources/lighting/shadows.c
 
 OBJS = $(SRCS:sources/%.c=$(OBJDIR)/%.o)
 
