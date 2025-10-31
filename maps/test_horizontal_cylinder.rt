@@ -1,0 +1,9 @@
+# Test horizontal cylinder with visible end caps
+A 0.3 255,255,255
+L 10,10,10 0.7 255,255,255
+
+# Camera looking at cylinder from an angle
+C 8,3,5 -0.8,-0.3,-0.5 70
+
+# Horizontal cylinder along X-axis
+cy 0,0,0 1,0,0 4 10 255,100,100

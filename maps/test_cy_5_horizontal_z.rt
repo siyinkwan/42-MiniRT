@@ -1,0 +1,6 @@
+# Test 5: Horizontal cylinder along Z-axis
+# Expected: Circular back cap visible
+A 0.3 255,255,255
+L 10,5,-10 0.7 255,255,255
+C 0,2,12 0,0,-1 70
+cy 0,0,0 0,0,1 6 12 100,255,200

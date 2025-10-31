@@ -1,65 +1,3 @@
-42-MiniRT/
-├── Makefile                    ✅ COMPLETE (includes all sources)
-├── includes/
-│   └── minirt.h               ✅ COMPLETE (all structures, function declarations)
-├── libft/                     ✅ COMPLETE
-├── minilibx-linux/            ✅ COMPLETE
-├── sources/
-│   ├── main.c                 ✅ COMPLETE (scene loading, MLX integration)
-│   ├── math/                  ✅ COMPLETE
-│   │   ├── vec_ops.c          ✅ Vector operations
-│   │   ├── vec_ops2.c         ✅ Extended vector operations
-│   │   ├── vec_ops3.c         ✅ Additional vector operations
-│   │   ├── ray_ops.c          ✅ Ray mathematics
-│   │   └── math_utils.c       ✅ Mathematical utilities
-│   ├── intersection/          ✅ COMPLETE
-│   │   ├── intersect_sphere.c ✅ Sphere intersection
-│   │   ├── intersect_plane.c  ✅ Plane intersection
-│   │   ├── intersect_cylinder.c ✅ Cylinder intersection
-│   │   ├── intersect_cone.c   ✅ Cone intersection (BONUS)
-│   │   └── intersect_scene.c  ✅ Scene intersection coordinator
-│   ├── lighting/              ✅ COMPLETE (Full Phong Model)
-│   │   ├── ambient.c          ✅ Ambient lighting
-│   │   ├── diffuse.c          ✅ Lambert diffuse model (with shadows)
-│   │   ├── specular.c         ✅ Phong specular highlights (with shadows)
-│   │   ├── shadows.c          ✅ Shadow ray testing
-│   │   └── lighting_main.c    ✅ Lighting pipeline coordinator
-│   ├── materials/             🎨 BONUS IN PROGRESS (60% COMPLETE)
-│   │   ├── patterns.c         ❌ TODO - Checkerboard, stripes (HIGH PRIORITY)
-│   │   ├── bump_mapping.c     ✅ COMPLETE - Surface normal perturbation
-│   │   │                          • bump_func() - Height function
-│   │   │                          • compute_uv() - UV mapping (all shapes)
-│   │   │                          • compute_tangent_space() - TNB basis
-│   │   │                          • apply_bump() - Normal perturbation
-│   ├── camera/                ✅ COMPLETE
-│   │   ├── camera_setup.c     ✅ Camera coordinate system
-│   │   └── ray_generation.c   ✅ Pixel-to-ray conversion
-│   ├── scene/                 ✅ COMPLETE
-│   │   ├── scene_parser.c     ✅ Main parsing with line-by-line processing
-│   │   ├── parse_objects.c    ✅ Object parsing (sp, pl, cy, co) + materials
-│   │   ├── parse_elements.c   ✅ Camera, light, ambient parsing
-│   │   ├── parse_utils.c      ✅ Utility functions
-│   │   └── scene_utils.c      ✅ Scene management (init, free, validate)
-│   ├── render/                ✅ COMPLETE (Full Shading Pipeline)
-│   │   ├── renderer.c         ✅ Full pipeline (ambient, diffuse, specular,
-│   │   │                          shadows, bump mapping integration)
-│   │   ├── color_utils.c      ✅ vec3_to_rgb, clamp_color
-│   ├── mlx/                   ✅ COMPLETE
-│   │   └── mlx_init.c         ✅ MLX initialization and window management
-│   └── utils/                 ⚠️ MINIMAL (Only essentials)
-│       └── error_handling.c   ✅ Basic error functions (enough for project)
-├── maps/                      ✅ COMPLETE (test .rt files)
-│   ├── simple_test.rt         ✅ Basic scene testing
-│   ├── basic_materials.rt     ✅ Material property testing
-│   ├── pattern_materials.rt   ❌ TODO - Needs patterns.c first
-│   ├── bump_materials.rt      ✅ READY - Bump mapping testing
-│   ├── advanced_materials.rt  🔶 PARTIAL - Full material combinations
-│   └── edge_cases.rt          ✅ Edge case validation
-└── docs/                      ✅ COMPLETE (in framwork.txt)
-    └── framwork.txt           ✅ All math formulas and implementation notes
-
-
----------------------------------------------------------------------
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                                  MiniRT STRUCTURE                                   │
 └─────────────────────────────────────────────────────────────────────────────────────┘
@@ -336,6 +274,14 @@
 │              END                    │
 │        (Final image complete)       │
 └─────────────────────────────────────┘
+
+
+-----------------------------------------------------------------
+Ray tracing:
+P = vec_origin + t * vec_direction;
+
+-----------------------------------------------------------------
+Intersection:
 
 -----------------------------------------------------------------
 Final_Ambient = Material_Color × Light_Color × Ambient_Intensity

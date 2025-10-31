@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 18:27:17 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 14:20:36 by sguan            ###   ########.fr       */
+/*   Updated: 2025/10/31 14:59:33 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	camera_setup(t_camera *camera)
 	}
 	else
 		right_ref = world_up;
-	camera->right = vec3_normalize(vec3_cross(camera->forward, right_ref));
-	camera->up = vec3_normalize(vec3_cross(camera->right, camera->forward));
+	camera->right = vec3_normalize(vec3_cross(right_ref, camera->forward));
+	camera->up = vec3_normalize(vec3_cross(camera->forward, camera->right));
 }

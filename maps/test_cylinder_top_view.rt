@@ -1,0 +1,9 @@
+# View cylinder from directly above to see perfect circle
+A 0.3 255,255,255
+L 10,10,10 0.7 255,255,255
+
+# Camera looking straight down at cylinder
+C 0,5,-1 0,-1,0 70
+
+# Vertical cylinder
+cy 0,-4,-1 0,1,0 4 8 140,118,206

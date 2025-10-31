@@ -1,0 +1,6 @@
+# Test 4: Horizontal cylinder along X-axis
+# Expected: Circular left cap visible
+A 0.3 255,255,255
+L -10,5,10 0.7 255,255,255
+C -12,2,0 1,0,0 70
+cy 0,0,0 1,0,0 6 12 255,150,100

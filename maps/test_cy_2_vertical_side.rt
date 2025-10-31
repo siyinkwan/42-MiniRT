@@ -1,0 +1,6 @@
+# Test 2: Vertical cylinder - view from side
+# Expected: Rectangle shape (no caps visible)
+A 0.3 255,255,255
+L 10,10,10 0.7 255,255,255
+C 0,0,15 0,0,-1 70
+cy 0,0,0 0,1,0 6 10 255,100,150

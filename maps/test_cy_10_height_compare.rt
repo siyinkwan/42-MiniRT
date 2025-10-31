@@ -1,0 +1,14 @@
+# Test 10: Short vs tall cylinders
+# Expected: Different height cylinders, same radius
+A 0.3 255,255,255
+L 10,10,10 0.7 255,255,255
+C 0,5,15 0,-0.3,-0.9 70
+
+# Short cylinder
+cy -4,0,0 0,1,0 4 4 255,100,100
+
+# Medium cylinder
+cy 0,0,0 0,1,0 4 8 100,255,100
+
+# Tall cylinder
+cy 4,0,0 0,1,0 4 12 100,100,255

@@ -1,0 +1,10 @@
+# Test: Camera looking directly at cylinder end cap
+A 0.3 255,255,255
+L 10,0,0 0.8 255,255,255
+
+# Camera directly facing the LEFT end cap
+C -8,0,0 1,0,0 70
+
+# Horizontal cylinder along X-axis
+# Should see a perfect circle (left end cap)
+cy 0,0,0 1,0,0 4 8 150,100,255

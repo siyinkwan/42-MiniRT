@@ -1,0 +1,9 @@
+# Test: View cylinder at extreme angle to see end cap edge
+A 0.3 255,255,255
+L 10,5,10 0.8 255,255,255
+
+# Camera at grazing angle - should see both side and circular end cap
+C 8,2,0 -1,0,0 70
+
+# Horizontal cylinder - if cap is missing at edges, there's a bug
+cy 0,0,0 1,0,0 4 10 150,100,255

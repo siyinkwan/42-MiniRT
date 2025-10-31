@@ -1,0 +1,9 @@
+# Test cylinder end caps visibility
+A 0.3 255,255,255
+L 10,10,10 0.7 255,255,255
+
+# Camera looking straight down at the top cap
+C 0,10,0 0,-1,0 70
+
+# Vertical cylinder: should see the TOP cap as a perfect circle
+cy 0,0,0 0,1,0 6 10 255,100,100
