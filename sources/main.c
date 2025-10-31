@@ -44,6 +44,7 @@ static int	init_minirt(t_minirt *minirt, char *filename)
 	}
 	minirt->scene = *temp_scene;
 	free(temp_scene);
+	minirt->scene.camera.aspect_ratio = (double)minirt->width / (double)minirt->height;
 	camera_setup(&minirt->scene.camera);
 	if (!init_mlx(minirt))
 	{
@@ -53,36 +54,6 @@ static int	init_minirt(t_minirt *minirt, char *filename)
 	return (1);
 }
 
-////////////////TEST///////////////////
-void	render_hardcoded_test(t_minirt *minirt)
-{
-    int			x, y;
-    t_ray		ray;
-    t_hit		hit;
-    int			color;
-
-    for (y = 0; y < minirt->height; y++)
-    {
-        for (x = 0; x < minirt->width; x++)
-        {
-            ray = generate_ray(&minirt->scene.camera, x, y, 
-                minirt->width, minirt->height);
-            
-            hit = intersect_scene(ray, &minirt->scene);
-            
-            if (hit.hit && hit.material)
-            {
-                // Use the object's actual color
-                color = vec3_to_rgb(hit.material->color);
-                put_pixel(minirt, x, y, color);
-            }
-            else
-                put_pixel(minirt, x, y, 0x000000);  // Black background
-        }
-    }
-}
-//////////////////////////////////////////////////////////////
-
 int	main(int argc, char **argv)
 {
 	t_minirt	minirt;
@@ -91,11 +62,12 @@ int	main(int argc, char **argv)
 		return (ft_putendl_fd("Usage: ./miniRT <scene.rt>", 2), 1);
 	if (!init_minirt(&minirt, argv[1]))
 		return (1);
-	//render_scene(&minirt);
+	/* If MINIRT_DEBUG is set, dump parsed scene for debugging */
+	if (getenv("MINIRT_DEBUG"))
+		print_scene_info(&minirt.scene);
 
-	render_hardcoded_test(&minirt);  //temp test
-    display_image(&minirt); //temp test
-
+	render_scene(&minirt);
+	display_image(&minirt);
 	mlx_key_hook(minirt.window, handle_keypress, &minirt);
 	mlx_hook(minirt.window, 17, 0, handle_destroy, &minirt);
 	mlx_loop(minirt.mlx);

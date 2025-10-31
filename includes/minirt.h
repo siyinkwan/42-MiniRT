@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/10/29 16:38:28 by sguan            ###   ########.fr       */
+/*   Updated: 2025/10/31 14:45:46 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,6 +387,9 @@ bool		parse_mtl_attr(t_material *material, char **tokens, int count, int index);
 ** Scene validation
 */
 bool		validate_scene(t_scene *scene);
+
+/* Debug */
+void		print_scene_info(t_scene *scene);
 
 /*
 ** Lighting calculations

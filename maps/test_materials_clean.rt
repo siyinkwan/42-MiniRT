@@ -1,0 +1,32 @@
+# Clean material test - optimized positions for clear viewing
+# Shows different material properties on spheres and objects
+
+# Ambient lighting
+A 0.2 255,255,255
+
+# Camera - positioned to see all objects from front
+C 0,0,-35 0,0,1 70
+
+# Main light source
+L 15,25,-15 0.8 255,255,255
+
+# CENTER: Red sphere with default material
+sp 0,0,15 10 255,0,0
+
+# RIGHT: Green sphere with high ambient (stays bright in shadow)
+sp 18,0,15 10 0,255,0 0.6
+
+# LEFT: Blue sphere with low ambient, high diffuse
+sp -18,0,15 10 0,0,255 0.2 0.9
+
+# TOP: Yellow sphere with high specular (strong highlights)
+sp 0,18,15 10 255,255,0 0.2 0.6 0.9
+
+# BOTTOM: Magenta sphere with high shininess (sharp highlights)
+sp 0,-18,15 10 255,0,255 0.3 0.7 0.8 150
+
+# Ground plane
+pl 0,-25,0 0,1,0 100,100,100 0.3 0.5 0.2 40
+
+# Right cylinder - vertical, orange
+cy 30,-5,15 0,1,0 5 18 255,128,0 0.3 0.6 0.5 60
