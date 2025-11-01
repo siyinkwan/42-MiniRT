@@ -19,17 +19,15 @@ double	cal_hit_infinite_cone(t_ray ray, t_cone cone)
 	t_vec3		oc;
 	double		dot_dir_axis;
 	double		dot_oc_axis;
-		
+
 	cos_sq = cos(cone.angle) * cos(cone.angle);
 	oc = vec3_subtract(ray.origin, cone.apex);
 	dot_dir_axis = vec3_dot(ray.direction, cone.axis);
 	dot_oc_axis = vec3_dot(oc, cone.axis);
-	
 	q.a = dot_dir_axis * dot_dir_axis - cos_sq;
 	q.b = 2.0 * (dot_dir_axis * dot_oc_axis - vec3_dot(ray.direction, oc) * cos_sq);
 	q.c = dot_oc_axis * dot_oc_axis - vec3_dot(oc, oc) * cos_sq;
 	q.discriminant = q.b * q.b - 4 * q.a * q.c;
-	
 	if (fabs(q.a) < EPSILON || q.discriminant < 0)
 		return (-1.0);
 	else
@@ -108,13 +106,10 @@ t_vec3	calculate_cone_surface_normal(t_vec3 point, t_cone *cone)
 	projection_point = vec3_add(cone->apex, vec3_scale(cone->axis, projection));
 	radial = vec3_subtract(point, projection_point);
 	radial = vec3_normalize(radial);
-	
 	h = projection * tan(cone->angle);
 	if (h < EPSILON)
 		h = EPSILON;
-	
 	normal = vec3_subtract(radial, vec3_scale(cone->axis, tan(cone->angle)));
-	
 	return (vec3_normalize(normal));
 }
 

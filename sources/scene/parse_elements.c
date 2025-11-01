@@ -15,13 +15,13 @@
 bool	parse_ambient(t_scene *scene, char **tokens)
 {
 	if (count_tokens(tokens) != 3)
-		return (printf("Error: Ambient requires 2 parameters\n"), false);
+		return (printf("Error\nAmbient requires 2 parameters\n"), false);
 	scene->ambient.ratio = ft_atof(tokens[1]);
 	if (scene->ambient.ratio < 0.0 || scene->ambient.ratio > 1.0)
-		return (printf("Error: Ambient ratio invalid\n"), false);
+		return (printf("Error\nAmbient ratio invalid\n"), false);
 	if (!parse_color(tokens[2], &scene->ambient.color))
 	{
-		printf("Error: Invalid ambient color format\n");
+		printf("Error\nInvalid ambient color format\n");
 		return (false);
 	}
 	return (true);
@@ -30,26 +30,26 @@ bool	parse_ambient(t_scene *scene, char **tokens)
 bool	parse_camera(t_scene *scene, char **tokens)
 {
 	if (count_tokens(tokens) != 4)
-		return (printf("Error: Camera requires 3 parameters\n"), false);
+		return (printf("Error\nCamera requires 3 parameters\n"), false);
 	if (!parse_vec3(tokens[1], &scene->camera.position))
 	{
-		printf("Error: Invalid camera position format\n");
+		printf("Error\nInvalid camera position format\n");
 		return (false);
 	}
 	if (!parse_vec3(tokens[2], &scene->camera.forward))
 	{
-		printf("Error: Invalid camera direction format\n");
+		printf("Error\nInvalid camera direction format\n");
 		return (false);
 	}
 	if (vec3_length(scene->camera.forward) < EPSILON)
 	{
-		printf("Error: Camera direction cannot be zero vector\n");
+		printf("Error\nCamera direction cannot be zero vector\n");
 		return (false);
 	}
 	scene->camera.fov = ft_atof(tokens[3]);
 	if (scene->camera.fov <= 0.0 || scene->camera.fov >= 180.0)
 	{
-		printf("Error: Camera FOV must be between 0 and 180 degrees\n");
+		printf("Error\nCamera FOV must be between 0 and 180 degrees\n");
 		return (false);
 	}
 	return (true);
@@ -75,17 +75,17 @@ bool	parse_light(t_scene *scene, char **tokens)
 	t_light	*new_lights;
 
 	if (count_tokens(tokens) != 4)
-		return (printf("Error: Light requires 3 parameters\n"), false);
+		return (printf("Error\nLight requires 3 parameters\n"), false);
 	if (!parse_vec3(tokens[1], &pos))
-		return(printf("Error: Invalid light position\n"), false);
+		return(printf("Error\nInvalid light position\n"), false);
 	brightness = ft_atof(tokens[2]);
 	if (brightness < 0.0 || brightness > 1.0)
-		return (printf("Error: Invalid light brightness\n"), false);
+		return (printf("Error\nInvalid light brightness\n"), false);
 	if (!parse_color(tokens[3], &color))
-		return (printf("Error: Invalid light color\n"), false);
+		return (printf("Error\nInvalid light color\n"), false);
 	new_lights = malloc(sizeof(t_light) * (scene->light_count + 1));
 	if (!new_lights)
-		return (printf("Error: Memory allocation failed\n"), false);
+		return (printf("Error\nMemory allocation failed\n"), false);
 	add_light(scene, new_lights);
 	new_lights[scene->light_count].pos = pos;
 	new_lights[scene->light_count].brightness = brightness;

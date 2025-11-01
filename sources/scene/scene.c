@@ -50,7 +50,7 @@ static bool	dispatch_parser(char *id, t_scene *scene, char **tokens)
         return (parse_cylinder(scene, tokens));
     if (ft_strcmp(id, "co") == 0)
         return (parse_cone(scene, tokens));
-    printf("Error: Unknown identifier '%s'\n", id);
+    printf("Error\nUnknown identifier '%s'\n", id);
     return (false);
 }
 
@@ -73,7 +73,7 @@ bool	parse_line(char *line, t_scene *scene)
 	if (len == 0)
 		return (true);
 	if (has_invalid_chars(line))
-		return (printf("Error: Invalid characters in line\n"), false);
+		return (printf("Error\nInvalid characters in line\n"), false);
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0])
 		return (free_tokens(tokens), false);

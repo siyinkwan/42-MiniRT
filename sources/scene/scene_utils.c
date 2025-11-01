@@ -18,17 +18,17 @@ bool validate_scene(t_scene *scene)
 		return (false);
 	if (scene->ambient.ratio < 0)
 	{
-		printf("Error: Missing ambient light definition\n");
+		printf("Error\nMissing ambient light definition\n");
 		return (false);
 	}
 	if (scene->camera.fov <= 0)
 	{
-		printf("Error: Missing camera definition\n");
+		printf("Error\nMissing camera definition\n");
 		return (false);
 	}
 	if (!scene->objects)
 	{
-		printf("Error: Scene must contain at least one object\n");
+		printf("Error\nScene must contain at least one object\n");
 		return (false);
 	}
 	return (true);
@@ -36,7 +36,7 @@ bool validate_scene(t_scene *scene)
 
 void	error_exit(char *msg)
 {
-	printf("Error: %s\n", msg);
+	printf("Error\n%s\n", msg);
 	exit(1);
 }
 

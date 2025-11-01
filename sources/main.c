@@ -29,12 +29,12 @@ static int	init_minirt(t_minirt *minirt, char *filename)
 {
 	t_scene	*temp_scene;
 
-	minirt->width = 800;
-	minirt->height = 600;
+	minirt->width = 1920;
+	minirt->height = 1080;
 	temp_scene = init_scene();
 	if (!temp_scene)
 	{
-		ft_putendl_fd("Error: Failed to initialize scene", 2);
+		ft_putendl_fd("Error\nFailed to initialize scene", 2);
 		return (0);
 	}
 	if (parse_scene(filename, temp_scene) < 0)
@@ -48,7 +48,7 @@ static int	init_minirt(t_minirt *minirt, char *filename)
 	camera_setup(&minirt->scene.camera);
 	if (!init_mlx(minirt))
 	{
-		ft_putendl_fd("Error: Failed to initialize MLX", 2);
+		ft_putendl_fd("Error\nFailed to initialize MLX", 2);
 		return (0);
 	}
 	return (1);
