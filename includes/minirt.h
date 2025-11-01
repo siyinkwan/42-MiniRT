@@ -26,7 +26,7 @@
 #define PI 3.14159265358979323846
 #endif
 
-#define EPSILON 1e-9
+#define EPSILON 1e-6
 #define B_EPSILON 1e-4
 /* ************************************************************************** */
 /*                              MATHEMATICAL TYPES                           */
@@ -334,10 +334,11 @@ t_vec3		ray_at(t_ray ray, double t);
 ** Object intersection functions
 */
 double		calculate_hit_plane(t_ray ray, t_plane plane);
-bool		in_circle(double t, t_ray ray, t_plane plane, double radius);
+//bool		in_circle(t_vec3 point, t_vec3 center, t_vec3 normal, double radius);
+bool	in_circle(t_vec3 p, t_vec3 c, t_vec3 axis, double r);
 t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
 t_hit		intersect_plane(t_ray ray, t_plane plane);
-t_hit		intersect_cylinder(t_ray ray, t_cylinder cylinder);
+t_hit	intersect_cylinder(t_ray ray, t_cylinder cyl);
 t_hit		intersect_cone(t_ray ray, t_cone cone);
 t_hit		intersect_scene(t_ray ray, t_scene *scene);
 

@@ -1,6 +1,0 @@
-# Test 6: Diagonal cylinder (45 degrees in XY plane)
-# Expected: Both caps visible at angles
-A 0.3 255,255,255
-L 10,10,10 0.7 255,255,255
-C 10,10,5 -0.7,-0.7,-0.3 70
-cy 0,0,0 0.7071,0.7071,0 6 12 255,200,100

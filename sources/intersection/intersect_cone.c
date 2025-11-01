@@ -46,14 +46,20 @@ double	cal_hit_cone_base(t_ray ray, t_cone cone)
 	t_plane	base;
 	double	t_base;
 	double	base_radius;
+	t_vec3	hit_point;
 
 	base.point = vec3_create(cone.apex.x,
 			cone.apex.y + cone.height, cone.apex.z);
 	base.normal = cone.axis;
 	base_radius = cone.height * tan(cone.angle);
 	t_base = calculate_hit_plane(ray, base);
-	if (t_base > 0.0 && in_circle(t_base, ray, base, base_radius))
-		return (t_base);
+	
+	if (t_base > 0.0)
+	{
+		hit_point = ray_at(ray, t_base);
+		if (in_circle(hit_point, base.point, base.normal, base_radius))
+			return (t_base);
+	}
 	return (-1.0);
 }
 

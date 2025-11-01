@@ -62,10 +62,6 @@ int	main(int argc, char **argv)
 		return (ft_putendl_fd("Usage: ./miniRT <scene.rt>", 2), 1);
 	if (!init_minirt(&minirt, argv[1]))
 		return (1);
-	/* If MINIRT_DEBUG is set, dump parsed scene for debugging */
-	if (getenv("MINIRT_DEBUG"))
-		print_scene_info(&minirt.scene);
-
 	render_scene(&minirt);
 	display_image(&minirt);
 	mlx_key_hook(minirt.window, handle_keypress, &minirt);

@@ -1,6 +1,0 @@
-# Test 3: Vertical cylinder - view from angle
-# Expected: Elliptical top cap + curved side
-A 0.3 255,255,255
-L 10,10,10 0.7 255,255,255
-C -8,5,8 0.6,-0.4,-0.6 70
-cy 0,0,0 0,1,0 6 10 150,255,100
