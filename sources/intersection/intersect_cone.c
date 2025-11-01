@@ -15,18 +15,21 @@
 double	cal_hit_infinite_cone(t_ray ray, t_cone cone)
 {
 	t_quadratic	q;
-	double		k;
+	double		cos_sq;
 	t_vec3		oc;
+	double		dot_dir_axis;
+	double		dot_oc_axis;
 		
-	k = tan(cone.angle);
+	cos_sq = cos(cone.angle) * cos(cone.angle);
 	oc = vec3_subtract(ray.origin, cone.apex);
-	q.a = ray.direction.x * ray.direction.x + 
-			ray.direction.z * ray.direction.z - 
-			k * k * ray.direction.y * ray.direction.y;
-	q.b = 2.0 * (oc.x * ray.direction.x + oc.z * ray.direction.z - 
-					k * k * oc.y * ray.direction.y);       
-	q.c = oc.x * oc.x + oc.z * oc.z - k * k * oc.y * oc.y;
+	dot_dir_axis = vec3_dot(ray.direction, cone.axis);
+	dot_oc_axis = vec3_dot(oc, cone.axis);
+	
+	q.a = dot_dir_axis * dot_dir_axis - cos_sq;
+	q.b = 2.0 * (dot_dir_axis * dot_oc_axis - vec3_dot(ray.direction, oc) * cos_sq);
+	q.c = dot_oc_axis * dot_oc_axis - vec3_dot(oc, oc) * cos_sq;
 	q.discriminant = q.b * q.b - 4 * q.a * q.c;
+	
 	if (fabs(q.a) < EPSILON || q.discriminant < 0)
 		return (-1.0);
 	else
@@ -47,9 +50,10 @@ double	cal_hit_cone_base(t_ray ray, t_cone cone)
 	double	t_base;
 	double	base_radius;
 	t_vec3	hit_point;
+	t_vec3	base_center;
 
-	base.point = vec3_create(cone.apex.x,
-			cone.apex.y + cone.height, cone.apex.z);
+	base_center = vec3_add(cone.apex, vec3_scale(cone.axis, cone.height));
+	base.point = base_center;
 	base.normal = cone.axis;
 	base_radius = cone.height * tan(cone.angle);
 	t_base = calculate_hit_plane(ray, base);
@@ -68,14 +72,17 @@ double	calculate_hit_cone(t_ray ray, t_cone cone)
 	double	closest_t;
 	double	t_temp;
 	t_vec3	hit_point;
+	t_vec3	apex_to_hit;
+	double	projection;
 
 	closest_t = INFINITY;
 	t_temp = cal_hit_infinite_cone(ray, cone);
 	if (t_temp > 0.0)
 	{
 		hit_point = ray_at(ray, t_temp);
-		if (hit_point.y >= cone.apex.y && 
-			hit_point.y <= (cone.apex.y + cone.height))
+		apex_to_hit = vec3_subtract(hit_point, cone.apex);
+		projection = vec3_dot(apex_to_hit, cone.axis);
+		if (projection >= 0.0 && projection <= cone.height)
 			closest_t = t_temp;
 	}
 	t_temp = cal_hit_cone_base(ray, cone);
@@ -89,15 +96,25 @@ double	calculate_hit_cone(t_ray ray, t_cone cone)
 
 t_vec3	calculate_cone_surface_normal(t_vec3 point, t_cone *cone)
 {
-	double	k;
-	t_vec3	local_point;
+	t_vec3	apex_to_point;
+	double	projection;
+	t_vec3	projection_point;
+	t_vec3	radial;
 	t_vec3	normal;
+	double	h;
 
-	k = tan(cone->angle);
-	local_point = vec3_subtract(point, cone->apex);
-	normal = vec3_create(2.0 * local_point.x,
-		-2.0 * k * k * local_point.y,
-		2.0 * local_point.z);
+	apex_to_point = vec3_subtract(point, cone->apex);
+	projection = vec3_dot(apex_to_point, cone->axis);
+	projection_point = vec3_add(cone->apex, vec3_scale(cone->axis, projection));
+	radial = vec3_subtract(point, projection_point);
+	radial = vec3_normalize(radial);
+	
+	h = projection * tan(cone->angle);
+	if (h < EPSILON)
+		h = EPSILON;
+	
+	normal = vec3_subtract(radial, vec3_scale(cone->axis, tan(cone->angle)));
+	
 	return (vec3_normalize(normal));
 }
 
@@ -105,6 +122,8 @@ t_hit	intersect_cone(t_ray ray, t_cone cone)
 {
 	t_hit	result;
 	double	t;
+	t_vec3	base_center;
+	double	dist_to_base;
 
 	result.hit = false;
 	result.t = -1.0;
@@ -116,7 +135,11 @@ t_hit	intersect_cone(t_ray ray, t_cone cone)
 		result.hit = true;
 		result.t = t;
 		result.point = ray_at(ray, t);
-		if (fabs(result.point.y - (cone.apex.y + cone.height)) < EPSILON)
+		
+		base_center = vec3_add(cone.apex, vec3_scale(cone.axis, cone.height));
+		dist_to_base = vec3_distance(result.point, base_center);
+		
+		if (dist_to_base < cone.height * tan(cone.angle) + EPSILON)
 			result.normal = cone.axis;
 		else
 			result.normal = calculate_cone_surface_normal(result.point, &cone);
