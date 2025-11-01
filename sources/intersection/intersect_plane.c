@@ -47,6 +47,8 @@ t_hit		intersect_plane(t_ray ray, t_plane plane)
 		result.t = t;
 		result.point = ray_at(ray, t);
 		result.normal = plane.normal;
+		if (vec3_dot(ray.direction, result.normal) > 0)
+			result.normal = vec3_scale(result.normal, -1.0);	
 		result.material = &plane.material;
 	}
 	return (result);
