@@ -36,7 +36,8 @@ bool	parse_camera(t_scene *scene, char **tokens)
 		printf("Error\nInvalid camera position format\n");
 		return (false);
 	}
-	if (!parse_vec3(tokens[2], &scene->camera.forward))
+	if (!parse_vec3(tokens[2], &scene->camera.forward)
+		|| !is_normalized(scene->camera.forward))
 	{
 		printf("Error\nInvalid camera direction format\n");
 		return (false);

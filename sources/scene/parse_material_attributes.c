@@ -14,10 +14,10 @@
 
 static void	set_default_material(t_material *material)
 {
-	material->ambient = 1;
-	material->diffuse = 1;
-	material->specular = 1;
-	material->shininess = 400.0;
+	material->ambient = 0.5;
+	material->diffuse = 0.7;
+	material->specular = 0.8;
+	material->shininess = 1000;
 	material->pattern_type = PATTERN_SOLID;
 	material->pattern_color = vec3_create(1.0, 1.0, 1.0);
 	material->pattern_scale = 1.0;
