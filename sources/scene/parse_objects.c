@@ -60,7 +60,8 @@ bool	parse_plane(t_scene *scene, char **tokens)
 		return (printf("Error\nMemory allocation failed\n"), false);
 	new_obj->type = OBJECT_PLANE;
 	new_obj->data.plane.point = point;
-	new_obj->data.plane.normal = normal;
+	//new_obj->data.plane.normal = normal;
+	new_obj->data.plane.normal = vec3_normalize(normal);
 	new_obj->data.plane.material.color = color;
 	if (!parse_mtl_attr(&new_obj->data.plane.material, tokens, count, 4))
 		return (free(new_obj), printf("Error\nInvalid material options\n"), false);
@@ -87,7 +88,8 @@ bool	parse_cylinder(t_scene *scene, char **tokens)
 	new_obj = malloc(sizeof(t_object));
 	new_obj->type = OBJECT_CYLINDER;
 	new_obj->data.cylinder.center = cyl.center;
-	new_obj->data.cylinder.axis = cyl.axis;
+	//new_obj->data.cylinder.axis = cyl.axis;
+	new_obj->data.cylinder.axis = vec3_normalize(cyl.axis);
 	new_obj->data.cylinder.radius = cyl.radius;
 	new_obj->data.cylinder.height = cyl.height;
 	new_obj->data.cylinder.material.color = cyl.material.color;
@@ -112,6 +114,8 @@ bool	parse_cone(t_scene *scene, char **tokens)
 	co.height = ft_atof(tokens[4]);
 	if (!validate_cone_params(&co, tokens, angle_degrees))
 		return (printf("Error\nInvalid cone parameter\n"), false);
+	//
+	co.axis = vec3_normalize(co.axis);
 	new_obj = malloc(sizeof(t_object));
 	if (!new_obj)
 		return (printf("Error\nMemory allocation failed\n"), false);
