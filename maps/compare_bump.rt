@@ -1,0 +1,33 @@
+# Bump Mapping Comprehensive Test
+# Demonstrates bump mapping on spheres and planes with side-by-side comparison
+# Material format: ambient diffuse specular shininess pattern_type pattern_color pattern_scale bump
+
+A 0.7   255,255,255
+C 0,2,-12  0,-0.15,1  65
+
+# Two lights for better detail visibility
+L -8,8,-5  0.6    255,255,255
+L 8,6,-3   0.4    200,220,255
+
+# ============ SPHERES - Top Row (Smooth Reference) ============
+# Left sphere - smooth, no bump
+sp -4,4,8  1.8  255,100,100  0.6 0.4 0.6 60 0 255,255,255 1.0 0
+
+# Right sphere - smooth, no bump
+sp 4,4,8  1.8  100,255,100  0.6 0.4 0.6 60 0 255,255,255 1.0 0
+
+# ============ SPHERES - Bottom Row (With Bump) ============
+# Left sphere with bump - shows organic texture
+sp -4,-1,4  7  255,100,100  0.6 0.4 0.6 60 0 255,255,255 1.0 1
+
+# Right sphere with bump - shows organic texture
+sp 4,-1,4  7  100,255,100  0.6 0.4 0.6 60 0 255,255,255 1.0 1
+
+# ============ PLANE - Background with Bump ============
+# Large plane with bump mapping to show texture clearly
+pl 0,0,15  0,0,-1  80,120,80  0.6 0.4 0.5 40 0 255,255,255 1.0 1
+
+# ============ GROUND - Reference without Bump ============
+pl 0,-2.5,0  0,1,0  100,100,100  0.6 0.4 0.3 20 0 255,255,255 1.0 0
+
+

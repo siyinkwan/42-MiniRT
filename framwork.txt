@@ -311,6 +311,46 @@ Rm·V = Dot product (how aligned reflection is with view direction)
 im,s = Light intensity for specular
 Result: Shiny highlights (what we need to implement next)
 
+-------------------------------------------------------
+BUMP MAPPING IMPLEMENTATION
+-------------------------------------------------------
+
+Bump mapping simulates surface detail by perturbing normals without changing geometry.
+Implemented using multi-octave fractal noise (Perlin-like turbulence).
+
+Pipeline: World XYZ → UV Coords → Height Function → Normal Perturbation
+
+CORE FORMULA:
+n′ = n - (∂h/∂u)·T - (∂h/∂v)·B
+Where: n′=perturbed normal, n=original, ∂h/∂u,∂h/∂v=height gradients, T,B=tangent basis
+
+IMPLEMENTATION:
+
+1. hash2d(x,y) = frac(sin(x·127.1 + y·311.7) × 43758.5453)
+   Generates deterministic pseudo-random values at grid points [0,1]
+
+2. smooth_interp(a,b,t) = a·(1-ft) + b·ft  where ft=(1-cos(t·π))/2
+   Cosine interpolation for seamless transitions (S-curve vs linear)
+
+3. smooth_noise(x,y): Bilinear interpolation of 4 grid corners
+   Creates continuous noise field from discrete hash values
+
+4. bump_func(u,v): 6-octave fractal accumulation
+   for i=0 to 5: result += smooth_noise(u·freq·5, v·freq·5) × amp
+                 amp *= 0.5, freq *= 2.0
+   Layers noise at different scales: large features → fine details
+
+5. Tangent Space: TNB orthogonal basis aligned with surface
+   T=tangent, B=bitangent, N=normal for local coordinate frame
+
+6. Numerical Gradients: ∂h/∂u ≈ (h(u+ε,v)-h(u,v))/ε  where ε=1e-4
+   Computes slope of height field for normal perturbation
+
+RESULT: Natural organic textures with multi-scale detail, proper lighting interaction
+
+-------------------------------------------------------
+BUMP function
+
 
 -------------------------------------------------------
 BUMP MAPPING
