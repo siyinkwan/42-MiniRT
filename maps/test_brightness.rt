@@ -1,0 +1,44 @@
+# Brightness Test Scene
+# Testing illumination, spot lighting, and shadow management
+
+A 0.3 255,255,255
+
+# Camera positioned to face the sphere at origin
+# Camera at (-5,8,-15), looking towards origin (0,0,0)
+C -5,8,-15 0.282166,-0.451466,0.846499 70
+
+# Test 1: Sphere at origin with spot left/right of camera
+# Sphere will be lit sideways
+sp 0,0,0 4 200,50,50
+
+# Spot light positioned to the LEFT side of the sphere (from camera's perspective)
+L -8,3,2 0.8 255,255,255
+
+
+# # Test 2: Translated sphere with spot creating proper halo of light
+# # Light halo computed after translation
+# sp 6,3,5 3.5 50,200,50
+
+# # Spot light for the translated sphere
+# L 8,8,2 0.7 255,240,200
+
+
+
+
+# # Test 3 & 4: Shadow test - vertical spot, sphere and plane
+# # Sphere elevated to cast shadow on plane
+# sp 0,5,10 3 100,100,255
+
+# # Vertical spot light above to create sphere shadow on plane
+# L 0,15,10 0.9 255,255,255
+
+# # Ground plane to receive shadows
+# pl 0,0,0 0,1,0 180,180,180
+
+# # Additional objects for complex shadow scene
+# cy 3,0,8 0,1,0 1.5 6 255,200,0
+# sp -4,2,12 2.5 255,0,200
+# co -3,0,6 0,1,0 2 4 0,200,200
+
+# # Back wall plane
+# pl 0,0,20 0,0,-1 150,150,150

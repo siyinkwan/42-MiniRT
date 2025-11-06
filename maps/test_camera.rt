@@ -1,0 +1,28 @@
+A 0.2 255,255,255
+
+#TEST 1
+# Camera on positive X axis at (20,0,0), looking towards origin (0,0,0)
+#C 20,0,0 -1,0,0 70
+
+#TEST 2
+# Camera on positive Y axis at (0,20,0), looking down towards origin (0,0,0)
+#C 0,20,0 0,-1,0 70
+
+#TEST3
+# Camera on positive Z axis at (0,0,20), looking towards origin (0,0,0)
+#C 0,0,20 0,0,-1 70
+
+#TEST4
+# Camera at random position (15,12,-8), looking towards origin (0,0,0)
+# Direction vector normalized: pointing from camera to origin
+C 15,12,-8 -0.75573,-0.604564,0.251743 70
+
+
+L 0,10,10 0.7 255,255,255
+# Random scene with various objects at/near origin
+sp 0,3,3 3 0,255,0
+sp 0,-3,-3 3 0,0,255
+
+cy 0,0,0 0,1,0 2 8 255,255,0
+
+pl 0,-5,0 0,1,0 150,150,150
