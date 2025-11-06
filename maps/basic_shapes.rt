@@ -1,0 +1,14 @@
+A 0.2 255,255,255
+
+C 0,0,20 0,0,-1 70
+
+L 40,50,30 0.4 255,255,255
+
+# Test 1: Sphere at coordinates (0, 0, 0)
+sp 0,0,0 10 255,0,0
+
+# Test 2: Plane with z value of null (perpendicular to camera view)
+#pl 0,0,-10 0,0,1 100,100,100
+
+# Test 3: Cylinder extending along the y axis
+#cy 0,0,0 0,1,0 5 20 0,255,0

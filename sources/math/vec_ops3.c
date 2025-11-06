@@ -40,10 +40,10 @@ t_vec3		vec3_normalize(t_vec3 v)
 
 bool	is_normalized(t_vec3 vec)
 {
-	// double	length;
-    (void) vec;
-	// length = sqrt(vec3_len_squared(vec));
-	// return (fabs(length - 1.0) < EPSILON);
+	double	length;
+
+	length = sqrt(vec3_len_squared(vec));
+	return (fabs(length - 1.0) < EPSILON);
     return (true);
 }
 

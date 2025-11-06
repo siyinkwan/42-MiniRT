@@ -1,0 +1,20 @@
+A 0.2 255,255,255
+
+C 0,0,30 0,0,-1 70
+
+L -20,20,10 0.6 255,255,255
+L 20,20,10 0.4 255,255,255
+
+# Test 1: Translation test
+# First sphere at origin (0,0,0)
+sp 0,0,0 2 255,0,0
+
+# Second sphere translated in z direction (parallel to camera view)
+# Distance > diameter (5), so translated by 8 units
+sp 0,0,-8 5 0,0,255
+
+# Test 2: Rotation test
+# Cylinder originally along y axis, rotated 90° (PI/2) around z axis
+# After rotation: y axis becomes x axis direction
+# So axis vector changes from (0,1,0) to (1,0,0)
+#cy 0,-5,0 0,1,0 3 10 0,255,0

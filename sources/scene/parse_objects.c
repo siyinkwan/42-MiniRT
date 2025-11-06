@@ -18,9 +18,8 @@ bool	parse_sphere(t_scene *scene, char **tokens)
 	double		diameter;
 	t_vec3		color;
 	t_object	*new_obj;
-	int			count;
+	const int	count = count_tokens(tokens);
 
-	count = count_tokens(tokens);
 	if (count < 4)
 		return (printf("Error\nSphere requires at least 3 parameters\n"), false);
 	diameter = ft_atof(tokens[2]);
@@ -114,7 +113,6 @@ bool	parse_cone(t_scene *scene, char **tokens)
 	co.height = ft_atof(tokens[4]);
 	if (!validate_cone_params(&co, tokens, angle_degrees))
 		return (printf("Error\nInvalid cone parameter\n"), false);
-	//
 	co.axis = vec3_normalize(co.axis);
 	new_obj = malloc(sizeof(t_object));
 	if (!new_obj)

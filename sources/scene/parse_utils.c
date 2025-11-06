@@ -28,8 +28,7 @@ bool	validate_cone_params(t_cone *co, char **tokens, double angle_degrees)
 {
 	if (!parse_vec3(tokens[1], &co->apex) || !parse_vec3(tokens[2], &co->axis)
 		|| angle_degrees <= 0.0 || angle_degrees >= 90.0 || co->height <= 0.0
-		|| !parse_color(tokens[5], &co->material.color)
-		|| !is_normalized(co->axis))
+		|| !parse_color(tokens[5], &co->material.color))
 		return (false);
 	co->angle = angle_degrees * PI / 180.0;
 	return (true);
