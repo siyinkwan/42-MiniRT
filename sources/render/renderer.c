@@ -74,15 +74,19 @@ void	render_scene(t_minirt *minirt)
 	t_ray	ray;
 	int		x;
 	int		y;
+	t_pixel	pixel;
 
+	pixel.width = minirt->width;
+	pixel.height = minirt->height;
 	y = 0;
 	while (y < minirt->height)
 	{
 		x = 0;
 		while (x < minirt->width)
 		{
-			ray = generate_ray(&minirt->scene.camera, x, y,
-					minirt->width, minirt->height);
+			pixel.x = x;
+			pixel.y = y;
+			ray = generate_ray(&minirt->scene.camera, pixel);
 			put_pixel(minirt, x, y,
 				vec3_to_rgb(trace_ray(&minirt->scene, ray, 0)));
 			x++;

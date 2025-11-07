@@ -122,8 +122,16 @@ typedef struct	s_viewport
 	double	width;
 	double	x;
 	double	y;
-	t_vec3	pos_in_world;
+	t_vec3	pos_world;
 }	t_viewport;
+
+typedef struct	s_pixel
+{
+	double	x;
+	double	y;
+	int		width;
+	int		height;
+}	t_pixel;
 
 /*
 ** t_light - Light source for illumination
@@ -346,7 +354,7 @@ t_hit		intersect_scene(t_ray ray, t_scene *scene);
 ** Camera and ray generation
 */
 void		camera_setup(t_camera *camera);
-t_ray		generate_ray(t_camera *camera, double pixel_x, double pixel_y, int width, int height);
+t_ray		generate_ray(t_camera *camera, t_pixel pixel);
 
 /*
 ** Scene parsing utilities

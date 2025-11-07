@@ -35,7 +35,7 @@
               │           │           │               │
         ┌───────────┐ ┌─────────┐ ┌─────────────┐ ┌─────────┐
         │ t_sphere  │ │ t_plane │ │ t_cylinder  │ │ t_cone  │
-        │           │ │         │ │             │ │(BONUS)  │
+        │           │ │         │ │             │ │         │
         │• center   │ │• point  │ │• center     │ │• apex   │
         │• radius   │ │• normal │ │• axis       │ │• axis   │
         │• material │ │• material││• radius     │ │• angle  │
@@ -49,26 +49,25 @@
                     │      t_material         │
                     │   (Surface Properties)  │
                     ├─────────────────────────┤
-                    │ • color (t_vec3)        │ ◄── Base RGB color
+                    │ • color (t_vec3)        │
                     │   - x (red)             │
                     │   - y (green)           │
                     │   - z (blue)            │
                     │                         │
                     │ PHONG LIGHTING MODEL:   │
-                    │ • ambient [0-1]         │ ◄── Base illumination
-                    │ • diffuse [0-1]         │ ◄── Matte reflection
-                    │ • specular [0-1]        │ ◄── Shiny reflection
-                    │ • shininess             │ ◄── Highlight sharpness
+                    │ • ambient [0-1]         │ 
+                    │ • diffuse [0-1]         │
+                    │ • specular [0-1]        │ 
+                    │ • shininess             │ 
                     │                         │
                     │ PATTERN SYSTEM (BONUS): │
-                    │ • pattern_type          │ ◄── SOLID/CHECKERBOARD/
-                    │   - PATTERN_SOLID       │     STRIPES/GRADIENT
+                    │ • pattern_type          │ 
+                    │   - PATTERN_SOLID       │    
                     │   - PATTERN_CHECKERBOARD│
                     │   - PATTERN_STRIPES     │
-                    │   - PATTERN_GRADIENT    │
-                    │ • pattern_color2        │ ◄── Second pattern color
-                    │ • pattern_scale         │ ◄── Pattern size
-                    │ • bump (bool)           │ ◄── Bump mapping flag
+                    │ • pattern_color2        │
+                    │ • pattern_scale         │ 
+                    │ • bump (bool)           │ 
                     └─────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
@@ -79,14 +78,14 @@
     │  t_ray  │─────▶│ intersect_   │─────▶│   t_hit     │
     │         │      │ object()     │      │             │
     │• origin │      │              │      │• hit (bool) │
-    │• direction│     │• sphere      │     │• t (distance)│
+    │• direction│    │• sphere      │     │• t (distance)│
     │• t_min   │     │• plane       │      │• point      │
     │• t_max   │     │• cylinder    │      │• normal     │
-    └─────────┘     │• cone        │      │• material*  │◄─┐
-                    └──────────────┘      │• object*    │  │
-                                          └─────────────┘  │
-                                                           │
-                                    Points back to the ───┘
+    └─────────┘      │• cone        │      │• material*  │◄─┐
+                     └──────────────┘      │• object*    │  │
+                                          └─────────────┘   │
+                                                            │
+                                    Points back to the ───——┘
                                     material of the 
                                     intersected object
 
@@ -274,77 +273,6 @@
 │              END                    │
 │        (Final image complete)       │
 └─────────────────────────────────────┘
-
-
------------------------------------------------------------------
-Ray tracing:
-P = vec_origin + t * vec_direction;
-
------------------------------------------------------------------
-Intersection:
-
------------------------------------------------------------------
-Final_Ambient = Material_Color × Light_Color × Ambient_Intensity
-
-🔍 Formula Breakdown:
-Ip = ka·ia + Σ(kd·(Lm·N)im,d + ks·(Rm·V)^α im,s)
-
-🔴 Ambient Term: ka·ia
-ka = Material ambient coefficient (material->ambient)
-ia = Ambient light intensity (scene->ambient.ratio × scene->ambient.color)
-Result: Base illumination (what we implemented in calculate_ambient())
-
-🔵 Diffuse Term: kd·(Lm·N)im,d
-kd = Material diffuse coefficient (material->diffuse)
-Lm = Light direction vector (FROM hit point TO light)
-N = Surface normal at hit point
-Lm·N = Dot product (Lambert's cosine law)
-im,d = Light intensity for diffuse
-Result: Matte reflection (what we implemented in calculate_diffuse())
-
-🟢 Specular Term: ks·(Rm·V)^α im,s
-ks = Material specular coefficient (material->specular)
-Rm = Reflection vector of light bouncing off surface
-V = View direction (FROM hit point TO camera)
-Rm·V = Dot product (how aligned reflection is with view direction)
-α = Shininess exponent (material->shininess)
-im,s = Light intensity for specular
-Result: Shiny highlights (what we need to implement next)
-
--------------------------------------------------------
-BUMP MAPPING IMPLEMENTATION
--------------------------------------------------------
-
-Bump mapping simulates surface detail by perturbing normals without changing geometry.
-Implemented using multi-octave fractal noise (Perlin-like turbulence).
-
-Pipeline: World XYZ → UV Coords → Height Function → Normal Perturbation
-
-CORE FORMULA:
-n′ = n - (∂h/∂u)·T - (∂h/∂v)·B
-Where: n′=perturbed normal, n=original, ∂h/∂u,∂h/∂v=height gradients, T,B=tangent basis
-
-IMPLEMENTATION:
-
-1. hash2d(x,y) = frac(sin(x·127.1 + y·311.7) × 43758.5453)
-   Generates deterministic pseudo-random values at grid points [0,1]
-
-2. smooth_interp(a,b,t) = a·(1-ft) + b·ft  where ft=(1-cos(t·π))/2
-   Cosine interpolation for seamless transitions (S-curve vs linear)
-
-3. smooth_noise(x,y): Bilinear interpolation of 4 grid corners
-   Creates continuous noise field from discrete hash values
-
-4. bump_func(u,v): 6-octave fractal accumulation
-   for i=0 to 5: result += smooth_noise(u·freq·5, v·freq·5) × amp
-                 amp *= 0.5, freq *= 2.0
-   Layers noise at different scales: large features → fine details
-
-5. Tangent Space: TNB orthogonal basis aligned with surface
-   T=tangent, B=bitangent, N=normal for local coordinate frame
-
-6. Numerical Gradients: ∂h/∂u ≈ (h(u+ε,v)-h(u,v))/ε  where ε=1e-4
-   Computes slope of height field for normal perturbation
 
 
 

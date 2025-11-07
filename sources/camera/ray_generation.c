@@ -12,24 +12,27 @@
 
 #include "minirt.h"
 
-t_ray	generate_ray(t_camera *camera, double pixel_x, double pixel_y, int width, int height)
+t_ray	generate_ray(t_camera *camera, t_pixel pixel)
 {
 	double		fov_rad;
 	t_viewport	viewport;
-	double	u;
-	double	v;
-	t_ray	ray;
+	double		u;
+	double		v;
+	t_ray		ray;
 
 	fov_rad = (camera->fov * PI) / 180;
 	viewport.height = 2 * tan(fov_rad / 2);
 	viewport.width = viewport.height * camera->aspect_ratio;
-	u = (pixel_x + 0.5) / (double)width;
-	v = (pixel_y + 0.5) / (double)height;
+	u = (pixel.x + 0.5) / (double)pixel.width;
+	v = (pixel.y + 0.5) / (double)pixel.height;
 	viewport.x = (u - 0.5) * viewport.width;
 	viewport.y = (0.5 - v) * viewport.height;
-	viewport.pos_in_world = vec3_add(camera->position, camera->forward);
-	viewport.pos_in_world = vec3_add(viewport.pos_in_world, vec3_scale(camera->right, viewport.x));	
-	viewport.pos_in_world = vec3_add(viewport.pos_in_world, vec3_scale(camera->up, viewport.y));
-	ray = ray_create(camera->position, vec3_subtract(viewport.pos_in_world, camera->position));
+	viewport.pos_world = vec3_add(camera->position, camera->forward);
+	viewport.pos_world = vec3_add(viewport.pos_world,
+			vec3_scale(camera->right, viewport.x));
+	viewport.pos_world = vec3_add(viewport.pos_world,
+			vec3_scale(camera->up, viewport.y));
+	ray = ray_create(camera->position,
+			vec3_subtract(viewport.pos_world, camera->position));
 	return (ray);
 }

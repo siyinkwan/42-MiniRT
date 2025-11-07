@@ -6,7 +6,7 @@
 #    By: sguan <sguan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 16:37:10 by sguan             #+#    #+#              #
-#    Updated: 2025/10/31 13:54:20 by sguan            ###   ########.fr        #
+#    Updated: 2025/11/07 14:11:01 by sguan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRCS = sources/main.c \
 OBJS = $(SRCS:sources/%.c=$(OBJDIR)/%.o)
 
 NAME = miniRT
-CFLAGS = -Wall -Wextra -Werror -ggdb -I/usr/include -I$(MLX) -I$(LIBFT_DIR) -I./includes
+CFLAGS = -Wall -Wextra -Werror -I/usr/include -I$(MLX) -I$(LIBFT_DIR) -I./includes
 LDFLAGS = -L$(MLX) -lmlx -L/usr/lib -lXext -lX11 -lm -lz -L$(LIBFT_DIR) -lft
 CC = cc
 RM = rm -f
