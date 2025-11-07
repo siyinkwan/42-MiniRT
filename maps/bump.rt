@@ -3,7 +3,7 @@
 # Material format: ambient diffuse specular shininess pattern_type pattern_color pattern_scale bump
 
 A 0.7   255,255,255
-C 0,2,-12  0,-0.15,1  65
+C 0,2,-12  0,-0.14834,0.988936  65
 
 # Two lights for better detail visibility
 L -8,8,-5  0.6    255,255,255
