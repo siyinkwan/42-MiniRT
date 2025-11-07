@@ -12,30 +12,32 @@
 
 #include "minirt.h"
 
-double		vec3_length(t_vec3 v)
+double	vec3_length(t_vec3 v)
 {
-    double  result;
+	double	result;
 
-    result = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-    return (result);
+	result = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	return (result);
 }
 
-double		vec3_len_squared(t_vec3 v)
+double	vec3_len_squared(t_vec3 v)
 {
-    double  result;
+	double	result;
 
-    result = v.x * v.x + v.y * v.y + v.z * v.z;
-    return (result);
+	result = v.x * v.x + v.y * v.y + v.z * v.z;
+	return (result);
 }
-t_vec3		vec3_normalize(t_vec3 v)
-{
-    t_vec3  result;
-    double  len = vec3_length(v);
 
-    result.x = v.x / len;
-    result.y = v.y / len;
-    result.z = v.z / len;
-    return (result);
+t_vec3	vec3_normalize(t_vec3 v)
+{
+	t_vec3	result;
+	double	len;
+
+	len = vec3_length(v);
+	result.x = v.x / len;
+	result.y = v.y / len;
+	result.z = v.z / len;
+	return (result);
 }
 
 bool	is_normalized(t_vec3 vec)
@@ -44,13 +46,13 @@ bool	is_normalized(t_vec3 vec)
 
 	length = sqrt(vec3_len_squared(vec));
 	return (fabs(length - 1.0) < EPSILON);
-    return (true);
 }
 
-double		vec3_distance(t_vec3 a, t_vec3 b)
+double	vec3_distance(t_vec3 a, t_vec3 b)
 {
-    double  result;
+	double	result;
 
-    result = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
-    return (result);
+	result = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y)
+			* (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
+	return (result);
 }

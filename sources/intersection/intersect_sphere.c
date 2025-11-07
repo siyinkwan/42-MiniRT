@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 16:41:16 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/31 21:43:44 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 17:06:39 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ double	calculate_hit_sphere(t_ray ray, t_sphere sphere)
 	}
 }
 
-t_hit		intersect_sphere(t_ray ray, t_sphere sphere)
+t_hit	intersect_sphere(t_ray ray, t_sphere sphere)
 {
 	t_hit	result;
 	double	t;

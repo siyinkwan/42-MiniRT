@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 13:37:26 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 14:19:19 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 19:59:31 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,22 @@ t_scene	*init_scene(void)
 
 static bool	dispatch_parser(char *id, t_scene *scene, char **tokens)
 {
-    if (ft_strcmp(id, "A") == 0)
-        return (parse_ambient(scene, tokens));
-    if (ft_strcmp(id, "C") == 0)
-        return (parse_camera(scene, tokens));
-    if (ft_strcmp(id, "L") == 0)
-        return (parse_light(scene, tokens));
-    if (ft_strcmp(id, "sp") == 0)
-        return (parse_sphere(scene, tokens));
-    if (ft_strcmp(id, "pl") == 0)
-        return (parse_plane(scene, tokens));
-    if (ft_strcmp(id, "cy") == 0)
-        return (parse_cylinder(scene, tokens));
-    if (ft_strcmp(id, "co") == 0)
-        return (parse_cone(scene, tokens));
-    printf("Error\nUnknown identifier '%s'\n", id);
-    return (false);
+	if (ft_strcmp(id, "A") == 0)
+		return (parse_ambient(scene, tokens));
+	if (ft_strcmp(id, "C") == 0)
+		return (parse_camera(scene, tokens));
+	if (ft_strcmp(id, "L") == 0)
+		return (parse_light(scene, tokens));
+	if (ft_strcmp(id, "sp") == 0)
+		return (parse_sphere(scene, tokens));
+	if (ft_strcmp(id, "pl") == 0)
+		return (parse_plane(scene, tokens));
+	if (ft_strcmp(id, "cy") == 0)
+		return (parse_cylinder(scene, tokens));
+	if (ft_strcmp(id, "co") == 0)
+		return (parse_cone(scene, tokens));
+	printf("Error\nUnknown identifier '%s'\n", id);
+	return (false);
 }
 
 bool	parse_line(char *line, t_scene *scene)
@@ -67,8 +67,8 @@ bool	parse_line(char *line, t_scene *scene)
 	if (comment_pos)
 		*comment_pos = '\0';
 	len = ft_strlen(line);
-	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\t' 
-		|| line[len - 1] == '\n' || line[len - 1] == '\r'))
+	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\t'
+			|| line[len - 1] == '\n' || line[len - 1] == '\r'))
 		line[--len] = '\0';
 	if (len == 0)
 		return (true);
@@ -89,7 +89,7 @@ int	parse_scene(char *filename, t_scene *scene)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return(error_exit("Cannot open file"), -1);
+		return (error_exit("Cannot open file"), -1);
 	line_num = 0;
 	line = get_next_line(fd);
 	while (line)

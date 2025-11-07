@@ -6,30 +6,11 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 14:30:37 by sguan             #+#    #+#             */
-/*   Updated: 2025/08/31 21:01:08 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 15:30:35 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-static void	calculate_cone_quadratic(t_ray ray, t_cone cone, t_quadratic *q)
-{
-	t_vec3	oc;
-	double	dot_dir_axis;
-	double	dot_oc_axis;
-	double	k;
-
-	k = pow(tan(cone.angle), 2);
-	oc = vec3_subtract(ray.origin, cone.apex);
-	dot_dir_axis = vec3_dot(ray.direction, cone.axis);
-	dot_oc_axis = vec3_dot(oc, cone.axis);
-	q->a = vec3_dot(ray.direction, ray.direction)
-		- (1 + k) * pow(dot_dir_axis, 2);
-	q->b = 2 * (vec3_dot(ray.direction, oc)
-			- (1 + k) * dot_dir_axis * dot_oc_axis);
-	q->c = vec3_dot(oc, oc) - (1 + k) * pow(dot_oc_axis, 2);
-	q->discriminant = q->b * q->b - 4 * q->a * q->c;
-}
 
 static double	solve_cone_intersection(t_quadratic q)
 {
@@ -45,24 +26,6 @@ static double	solve_cone_intersection(t_quadratic q)
 	if (t < EPSILON)
 		return (-1.0);
 	return (t);
-}
-
-static t_vec3	calculate_cone_normal(t_cone cone, t_vec3 point, double h)
-{
-	t_vec3	tip_to_p;
-	t_vec3	perp;
-	t_vec3	normal;
-	double	radius;
-	double	hyp;
-
-	radius = cone.height * tan(cone.angle);
-	hyp = sqrt(radius * radius + cone.height * cone.height);
-	tip_to_p = vec3_subtract(point, cone.apex);
-	perp = vec3_subtract(tip_to_p, vec3_scale(cone.axis, h));
-	perp = vec3_normalize(perp);
-	normal = vec3_subtract(vec3_scale(perp, cone.height / hyp),
-			vec3_scale(cone.axis, radius / hyp));
-	return (vec3_normalize(normal));
 }
 
 static bool	cone_body_hit(t_cone cone, t_ray ray, t_hit *hit)

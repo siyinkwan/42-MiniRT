@@ -44,13 +44,11 @@ static int	init_minirt(t_minirt *minirt, char *filename)
 	}
 	minirt->scene = *temp_scene;
 	free(temp_scene);
-	minirt->scene.camera.aspect_ratio = (double)minirt->width / (double)minirt->height;
+	minirt->scene.camera.aspect_ratio = (double)minirt->width
+		/ (double)minirt->height;
 	camera_setup(&minirt->scene.camera);
 	if (!init_mlx(minirt))
-	{
-		ft_putendl_fd("Error\nFailed to initialize MLX", 2);
-		return (0);
-	}
+		return (ft_putendl_fd("Error\nFailed to initialize MLX", 2), 0);
 	return (1);
 }
 
@@ -63,7 +61,7 @@ int	main(int argc, char **argv)
 	if (!init_minirt(&minirt, argv[1]))
 		return (1);
 	render_scene(&minirt);
-	display_image(&minirt);
+	mlx_put_image_to_window(minirt.mlx, minirt.window, minirt.image, 0, 0);
 	mlx_key_hook(minirt.window, handle_keypress, &minirt);
 	mlx_hook(minirt.window, 17, 0, handle_destroy, &minirt);
 	mlx_loop(minirt.mlx);

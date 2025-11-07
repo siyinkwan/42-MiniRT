@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 20:11:24 by sguan             #+#    #+#             */
-/*   Updated: 2025/10/31 13:58:15 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 17:06:56 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_hit	intersect_object(t_ray ray, t_object *object)
 	miss.material = NULL;
 	miss.object = NULL;
 	if (!object)
-		return (miss);   
+		return (miss);
 	if (object->type == OBJECT_SPHERE)
 		hit = intersect_sphere(ray, object->data.sphere);
 	else if (object->type == OBJECT_PLANE)

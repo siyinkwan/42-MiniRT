@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:58:49 by sguan             #+#    #+#             */
-/*   Updated: 2025/10/31 14:45:46 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 19:55:53 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,13 +342,14 @@ t_vec3		ray_at(t_ray ray, double t);
 ** Object intersection functions
 */
 double		calculate_hit_plane(t_ray ray, t_plane plane);
-//bool		in_circle(t_vec3 point, t_vec3 center, t_vec3 normal, double radius);
-bool	in_circle(t_vec3 p, t_vec3 c, t_vec3 axis, double r);
+bool		in_circle(t_vec3 p, t_vec3 c, t_vec3 axis, double r);
 t_hit		intersect_sphere(t_ray ray, t_sphere sphere);
 t_hit		intersect_plane(t_ray ray, t_plane plane);
-t_hit	intersect_cylinder(t_ray ray, t_cylinder cyl);
+t_hit		intersect_cylinder(t_ray ray, t_cylinder cyl);
 t_hit		intersect_cone(t_ray ray, t_cone cone);
 t_hit		intersect_scene(t_ray ray, t_scene *scene);
+void		calculate_cone_quadratic(t_ray ray, t_cone cone, t_quadratic *q);
+t_vec3		calculate_cone_normal(t_cone cone, t_vec3 point, double h);
 
 /*
 ** Camera and ray generation
@@ -422,7 +423,6 @@ t_vec3		trace_ray(t_scene *scene, t_ray ray, int depth);
 ** MinilibX integration
 */
 int			init_mlx(t_minirt *minirt);
-void		display_image(t_minirt *minirt);
 int			close_window(t_minirt *minirt);
 
 /*

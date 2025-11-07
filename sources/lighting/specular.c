@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 14:06:08 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/15 22:47:38 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 17:13:04 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@ t_vec3	reflect(t_vec3 light_dir, t_vec3 normal)
 	return (reflect_dir);
 }
 
+static double	calculate_specular_intensity(t_vec3 l_dir, t_hit *hit,
+	t_vec3 v_dir)
+{
+	t_vec3	incident;
+	t_vec3	r_dir;
+	double	spec_dot;
+
+	incident = vec3_scale(l_dir, -1.0);
+	r_dir = reflect(incident, hit->normal);
+	spec_dot = vec3_dot(r_dir, v_dir);
+	return (pow(fmax(0.0, spec_dot), hit->material->shininess));
+}
+
 t_vec3	calculate_specular(t_scene *scene, t_hit *hit)
 {
 	t_vec3	spec;
@@ -29,7 +42,7 @@ t_vec3	calculate_specular(t_scene *scene, t_hit *hit)
 	t_vec3	v_dir;
 	double	s;
 	int		i;
-	
+
 	spec = vec3_create(0, 0, 0);
 	v_dir = vec3_normalize(vec3_subtract(scene->camera.position, hit->point));
 	i = 0;
@@ -37,11 +50,10 @@ t_vec3	calculate_specular(t_scene *scene, t_hit *hit)
 	{
 		l_dir = vec3_normalize(vec3_subtract(scene->lights[i].pos, hit->point));
 		if (vec3_dot(hit->normal, l_dir) > 0.0
-		&& vec3_dot(hit->normal, v_dir) > 0.0
-		&& !is_in_shadow(scene, hit, scene->lights[i].pos))
+			&& vec3_dot(hit->normal, v_dir) > 0.0
+			&& !is_in_shadow(scene, hit, scene->lights[i].pos))
 		{
-			s = pow(fmax(0.0, vec3_dot(reflect(vec3_scale(l_dir, -1.0), hit->normal),
-			v_dir)), hit->material->shininess);
+			s = calculate_specular_intensity(l_dir, hit, v_dir);
 			s *= hit->material->specular * scene->lights[i].brightness;
 			spec = vec3_add(spec, vec3_scale(scene->lights[i].color, s));
 		}

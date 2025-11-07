@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 17:47:29 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/14 19:12:48 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 19:58:24 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ bool	validate_cone_params(t_cone *co, char **tokens, double angle_degrees)
 
 bool	has_invalid_chars(char *line)
 {
-    int	i;
+	int	i;
 
-    i = 0;
-    while (line[i])
-    {
-        if (!ft_isdigit(line[i]) && !ft_isalpha(line[i])
-            && line[i] != ' ' && line[i] != '\t' && line[i] != ','
-            && line[i] != '.' && line[i] != '-' && line[i] != '+'
+	i = 0;
+	while (line[i])
+	{
+		if (!ft_isdigit(line[i]) && !ft_isalpha(line[i])
+			&& line[i] != ' ' && line[i] != '\t' && line[i] != ','
+			&& line[i] != '.' && line[i] != '-' && line[i] != '+'
 			&& line[i] != '\n')
-            return (true);
-        i++;
-    }
-    return (false);
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
 bool	parse_color(char *token, t_vec3 *color)

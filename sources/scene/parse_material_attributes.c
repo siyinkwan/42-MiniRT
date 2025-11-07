@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:06:19 by sguan             #+#    #+#             */
-/*   Updated: 2025/10/31 14:38:43 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 19:56:52 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,3 @@ bool	parse_mtl_attr(t_material *material, char **tokens,
 		material->bump = (ft_atoi(tokens[i]) != 0);
 	return (true);
 }
-

@@ -215,7 +215,6 @@ $$|\vec{a} \times \vec{b}| = |\vec{a}| |\vec{b}| \sin(\theta)$$
 
 **1. Anti-commutative:**
 $$\vec{a} \times \vec{b} = -(\vec{b} \times \vec{a})$$
-⚠️ **Order matters!** Reverses direction
 
 **2. Right-hand rule:**
 - Point fingers along $\vec{a}$

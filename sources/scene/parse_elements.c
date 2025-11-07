@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 20:29:17 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/15 22:13:46 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 19:56:42 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	parse_light(t_scene *scene, char **tokens)
 	if (count_tokens(tokens) != 4)
 		return (printf("Error\nLight requires 3 parameters\n"), false);
 	if (!parse_vec3(tokens[1], &pos))
-		return(printf("Error\nInvalid light position\n"), false);
+		return (printf("Error\nInvalid light position\n"), false);
 	brightness = ft_atof(tokens[2]);
 	if (brightness < 0.0 || brightness > 1.0)
 		return (printf("Error\nInvalid light brightness\n"), false);

@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 20:15:14 by sguan             #+#    #+#             */
-/*   Updated: 2025/10/31 20:57:48 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 17:04:27 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 double	cal_hit_infinite_cylinder(t_ray ray, t_cylinder cyl)
 {
 	t_quadratic	q;
-	t_vec3	oc;
-	t_vec3	d;
-	t_vec3	delta;
+	t_vec3		oc;
+	t_vec3		d;
+	t_vec3		delta;
 
 	oc = vec3_subtract(ray.origin, cyl.center);
 	d = vec3_subtract(ray.direction, vec3_scale(cyl.axis,
@@ -38,15 +38,7 @@ double	cal_hit_infinite_cylinder(t_ray ray, t_cylinder cyl)
 	return (-1.0);
 }
 
-bool	in_circle(t_vec3 p, t_vec3 c, t_vec3 axis, double r)
-{
-	t_vec3	v;
-	t_vec3	proj;
 
-	v = vec3_subtract(p, c);
-	proj = vec3_subtract(v, vec3_scale(axis, vec3_dot(v, axis)));
-	return (vec3_length(proj) <= r + EPSILON);
-}
 
 double	cal_hit_cylinder_caps(t_ray ray, t_cylinder cyl)
 {
@@ -58,16 +50,21 @@ double	cal_hit_cylinder_caps(t_ray ray, t_cylinder cyl)
 
 	top.point = vec3_add(cyl.center, vec3_scale(cyl.axis, cyl.height / 2.0));
 	top.normal = cyl.axis;
-	bottom.point = vec3_subtract(cyl.center, vec3_scale(cyl.axis, cyl.height / 2.0));
+	bottom.point = vec3_subtract(cyl.center,
+			vec3_scale(cyl.axis, cyl.height / 2.0));
 	bottom.normal = cyl.axis;
 	t_top = calculate_hit_plane(ray, top);
 	t_bottom = calculate_hit_plane(ray, bottom);
 	t_cap = INFINITY;
-	if (t_top > 0.0 && in_circle(ray_at(ray, t_top), top.point, cyl.axis, cyl.radius))
+	if (t_top > 0.0 && in_circle(ray_at(ray, t_top),
+			top.point, cyl.axis, cyl.radius))
 		t_cap = fmin(t_cap, t_top);
-	if (t_bottom > 0.0 && in_circle(ray_at(ray, t_bottom), bottom.point, cyl.axis, cyl.radius))
+	if (t_bottom > 0.0 && in_circle(ray_at(ray, t_bottom),
+			bottom.point, cyl.axis, cyl.radius))
 		t_cap = fmin(t_cap, t_bottom);
-	return (t_cap < INFINITY ? t_cap : -1.0);
+	if (t_cap < INFINITY)
+		return (t_cap);
+	return (-1.0);
 }
 
 double	calculate_hit_cylinder(t_ray ray, t_cylinder cyl)
@@ -91,15 +88,35 @@ double	calculate_hit_cylinder(t_ray ray, t_cylinder cyl)
 	t = cal_hit_cylinder_caps(ray, cyl);
 	if (t > 0.0 && t < closest_t)
 		closest_t = t;
-	return (closest_t < INFINITY ? closest_t : -1.0);
+	if (closest_t < INFINITY)
+		return (closest_t);
+	return (-1.0);
+}
+
+static t_vec3	calculate_cylinder_normal(t_cylinder cyl, t_vec3 point)
+{
+	t_vec3	v;
+	t_vec3	radial;
+	double	proj;
+	double	hh;
+
+	v = vec3_subtract(point, cyl.center);
+	proj = vec3_dot(v, cyl.axis);
+	hh = cyl.height / 2.0;
+	if (fabs(proj - hh) < EPSILON)
+		return (cyl.axis);
+	else if (fabs(proj + hh) < EPSILON)
+		return (vec3_scale(cyl.axis, -1));
+	else
+	{
+		radial = vec3_subtract(v, vec3_scale(cyl.axis, proj));
+		return (vec3_normalize(radial));
+	}
 }
 
 t_hit	intersect_cylinder(t_ray ray, t_cylinder cyl)
 {
 	t_hit	result;
-	t_vec3	v;
-	double	proj;
-	double	hh;
 
 	result.hit = false;
 	result.t = -1.0;
@@ -110,17 +127,8 @@ t_hit	intersect_cylinder(t_ray ray, t_cylinder cyl)
 		return (result);
 	result.hit = true;
 	result.point = ray_at(ray, result.t);
-	v = vec3_subtract(result.point, cyl.center);
-	proj = vec3_dot(v, cyl.axis);
-	hh = cyl.height / 2.0;
-	if (fabs(proj - hh) < EPSILON)
-		result.normal = cyl.axis;
-	else if (fabs(proj + hh) < EPSILON)
-		result.normal = vec3_scale(cyl.axis, -1);
-	else
-		result.normal = vec3_normalize(vec3_subtract(v, vec3_scale(cyl.axis, proj)));
+	result.normal = calculate_cylinder_normal(cyl, result.point);
 	result.material = &cyl.material;
 	result.object = (t_object *)&cyl;
 	return (result);
 }
-

@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 16:01:03 by sguan             #+#    #+#             */
-/*   Updated: 2025/10/29 17:25:39 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/07 19:58:15 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	parse_sphere(t_scene *scene, char **tokens)
 	new_obj->data.sphere.radius = diameter / 2.0;
 	new_obj->data.sphere.material.color = color;
 	if (!parse_mtl_attr(&new_obj->data.sphere.material, tokens, count, 4))
-		return (free(new_obj), printf("Error\nInvalid material options\n"), false);
+		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);
@@ -59,11 +59,10 @@ bool	parse_plane(t_scene *scene, char **tokens)
 		return (printf("Error\nMemory allocation failed\n"), false);
 	new_obj->type = OBJECT_PLANE;
 	new_obj->data.plane.point = point;
-	//new_obj->data.plane.normal = normal;
 	new_obj->data.plane.normal = vec3_normalize(normal);
 	new_obj->data.plane.material.color = color;
 	if (!parse_mtl_attr(&new_obj->data.plane.material, tokens, count, 4))
-		return (free(new_obj), printf("Error\nInvalid material options\n"), false);
+		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);
@@ -87,13 +86,12 @@ bool	parse_cylinder(t_scene *scene, char **tokens)
 	new_obj = malloc(sizeof(t_object));
 	new_obj->type = OBJECT_CYLINDER;
 	new_obj->data.cylinder.center = cyl.center;
-	//new_obj->data.cylinder.axis = cyl.axis;
 	new_obj->data.cylinder.axis = vec3_normalize(cyl.axis);
 	new_obj->data.cylinder.radius = cyl.radius;
 	new_obj->data.cylinder.height = cyl.height;
 	new_obj->data.cylinder.material.color = cyl.material.color;
 	if (!parse_mtl_attr(&new_obj->data.cylinder.material, tokens, count, 6))
-		return (free(new_obj), printf("Error\nInvalid material options\n"), false);
+		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);
@@ -120,7 +118,7 @@ bool	parse_cone(t_scene *scene, char **tokens)
 	new_obj->type = OBJECT_CONE;
 	new_obj->data.cone = co;
 	if (!parse_mtl_attr(&new_obj->data.cone.material, tokens, count, 6))
-		return (free(new_obj), printf("Error\nInvalid material options\n"), false);
+		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
 	return (true);
