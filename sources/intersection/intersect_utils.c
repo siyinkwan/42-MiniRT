@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 11:59:38 by sguan             #+#    #+#             */
-/*   Updated: 2025/11/07 17:05:01 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 17:32:32 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,3 @@ bool	in_circle(t_vec3 p, t_vec3 c, t_vec3 axis, double r)
 	proj = vec3_subtract(v, vec3_scale(axis, vec3_dot(v, axis)));
 	return (vec3_length(proj) <= r + EPSILON);
 }
-

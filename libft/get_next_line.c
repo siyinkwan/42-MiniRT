@@ -6,15 +6,15 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:59:35 by sguan             #+#    #+#             */
-/*   Updated: 2025/09/05 18:10:46 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 17:35:28 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
-# endif
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 4
+#endif
 
 static int	check_newline(char *buffer)
 {

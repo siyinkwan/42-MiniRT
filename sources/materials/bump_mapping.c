@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 13:45:42 by sguan             #+#    #+#             */
-/*   Updated: 2025/11/07 18:14:36 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 17:09:37 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	compute_uv_sphere_plane(t_hit *t, double *u, double *v)
 	if (t->object->type == OBJECT_SPHERE)
 	{
 		d = vec3_normalize(vec3_subtract(t->point,
-					t->object->data.sphere.center));
+					t->object->u_data.sphere.center));
 		*u = 0.5 + atan2(d.z, d.x) / (2.0 * PI);
 		*v = 0.5 - asin(d.y) / PI;
 	}
@@ -47,20 +47,20 @@ static void	compute_uv_cylinder_cone(t_hit *t, double *u, double *v)
 
 	if (t->object->type == OBJECT_CYLINDER)
 	{
-		local_pos = vec3_subtract(t->point, t->object->data.cylinder.center);
-		height = vec3_dot(local_pos, t->object->data.cylinder.axis);
+		local_pos = vec3_subtract(t->point, t->object->u_data.cylinder.center);
+		height = vec3_dot(local_pos, t->object->u_data.cylinder.axis);
 		radial = vec3_subtract(local_pos,
-				vec3_scale(t->object->data.cylinder.axis, height));
+				vec3_scale(t->object->u_data.cylinder.axis, height));
 		d = vec3_normalize(radial);
 		*u = 0.5 + atan2(d.z, d.x) / (2.0 * PI);
 		*v = height;
 	}
 	else if (t->object->type == OBJECT_CONE)
 	{
-		local_pos = vec3_subtract(t->point, t->object->data.cone.apex);
-		height = vec3_dot(local_pos, t->object->data.cone.axis);
+		local_pos = vec3_subtract(t->point, t->object->u_data.cone.apex);
+		height = vec3_dot(local_pos, t->object->u_data.cone.axis);
 		radial = vec3_subtract(local_pos,
-				vec3_scale(t->object->data.cone.axis, height));
+				vec3_scale(t->object->u_data.cone.axis, height));
 		d = vec3_normalize(radial);
 		*u = 0.5 + atan2(d.z, d.x) / (2.0 * PI);
 		*v = height;
@@ -86,15 +86,15 @@ void	compute_uv(t_hit *t, double *u, double *v)
 	*v *= t->material->pattern_scale;
 }
 
-void	compute_tangent_space(t_hit *hit, t_vec3 *T, t_vec3 *B)
+void	compute_tangent_space(t_hit *hit, t_vec3 *tan, t_vec3 *bitan)
 {
 	t_vec3	up;
 
 	up = vec3_create(0.0, 1.0, 0.0);
 	if (fabs(vec3_dot(hit->normal, up)) > 0.99)
 		up = vec3_create(1.0, 0.0, 0.0);
-	*T = vec3_normalize(vec3_cross(up, hit->normal));
-	*B = vec3_cross(hit->normal, *T);
+	*tan = vec3_normalize(vec3_cross(up, hit->normal));
+	*bitan = vec3_cross(hit->normal, *tan);
 }
 
 t_vec3	apply_bump(t_hit *hit)
@@ -108,11 +108,11 @@ t_vec3	apply_bump(t_hit *hit)
 	if (!hit->material->bump)
 		return (hit->normal);
 	compute_uv(hit, &bump.u, &bump.v);
-	compute_tangent_space(hit, &bump.T, &bump.B);
+	compute_tangent_space(hit, &bump.tan, &bump.bitan);
 	h0 = bump_func(bump.u, bump.v);
 	hu = (bump_func(bump.u + B_EPSILON, bump.v) - h0) / B_EPSILON;
 	hv = (bump_func(bump.u, bump.v + B_EPSILON) - h0) / B_EPSILON;
-	perturbed_n = vec3_subtract(hit->normal, vec3_scale(bump.T, hu));
-	perturbed_n = vec3_subtract(perturbed_n, vec3_scale(bump.B, hv));
+	perturbed_n = vec3_subtract(hit->normal, vec3_scale(bump.tan, hu));
+	perturbed_n = vec3_subtract(perturbed_n, vec3_scale(bump.bitan, hv));
 	return (vec3_normalize(perturbed_n));
 }

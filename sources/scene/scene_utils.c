@@ -6,13 +6,13 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 18:29:36 by sguan             #+#    #+#             */
-/*   Updated: 2025/11/07 19:58:54 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 17:33:29 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool validate_scene(t_scene *scene)
+bool	validate_scene(t_scene *scene)
 {
 	if (!scene)
 		return (false);
@@ -54,7 +54,6 @@ void	free_tokens(char **tokens)
 	}
 	free(tokens);
 }
-
 
 void	free_scene(t_scene *scene)
 {

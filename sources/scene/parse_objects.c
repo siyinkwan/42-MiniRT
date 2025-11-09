@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 16:01:03 by sguan             #+#    #+#             */
-/*   Updated: 2025/11/07 19:58:15 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 16:56:54 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ bool	parse_sphere(t_scene *scene, char **tokens)
 	if (!new_obj)
 		return (printf("Error\nMemory allocation failed\n"), false);
 	new_obj->type = OBJECT_SPHERE;
-	new_obj->data.sphere.center = center;
-	new_obj->data.sphere.radius = diameter / 2.0;
-	new_obj->data.sphere.material.color = color;
-	if (!parse_mtl_attr(&new_obj->data.sphere.material, tokens, count, 4))
+	new_obj->u_data.sphere.center = center;
+	new_obj->u_data.sphere.radius = diameter / 2.0;
+	new_obj->u_data.sphere.material.color = color;
+	if (!parse_mtl_attr(&new_obj->u_data.sphere.material, tokens, count, 4))
 		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
@@ -58,10 +58,10 @@ bool	parse_plane(t_scene *scene, char **tokens)
 	if (!new_obj)
 		return (printf("Error\nMemory allocation failed\n"), false);
 	new_obj->type = OBJECT_PLANE;
-	new_obj->data.plane.point = point;
-	new_obj->data.plane.normal = vec3_normalize(normal);
-	new_obj->data.plane.material.color = color;
-	if (!parse_mtl_attr(&new_obj->data.plane.material, tokens, count, 4))
+	new_obj->u_data.plane.point = point;
+	new_obj->u_data.plane.normal = vec3_normalize(normal);
+	new_obj->u_data.plane.material.color = color;
+	if (!parse_mtl_attr(&new_obj->u_data.plane.material, tokens, count, 4))
 		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
@@ -72,10 +72,9 @@ bool	parse_cylinder(t_scene *scene, char **tokens)
 {
 	t_cylinder	cyl;
 	t_object	*new_obj;
-	int			count;
+	const int	count = count_tokens(tokens);
 
-	count = count_tokens(tokens);
-	if (count_tokens(tokens) < 6)
+	if (count < 6)
 		return (printf("Error\nNot enough parameters\n"), false);
 	cyl.radius = ft_atof(tokens[3]) / 2.0;
 	cyl.height = ft_atof(tokens[4]);
@@ -84,13 +83,14 @@ bool	parse_cylinder(t_scene *scene, char **tokens)
 			&cyl.material.color) || !is_normalized(cyl.axis))
 		return (printf("Error\nInvalid cylinder parameter\n"), false);
 	new_obj = malloc(sizeof(t_object));
-	new_obj->type = OBJECT_CYLINDER;
-	new_obj->data.cylinder.center = cyl.center;
-	new_obj->data.cylinder.axis = vec3_normalize(cyl.axis);
-	new_obj->data.cylinder.radius = cyl.radius;
-	new_obj->data.cylinder.height = cyl.height;
-	new_obj->data.cylinder.material.color = cyl.material.color;
-	if (!parse_mtl_attr(&new_obj->data.cylinder.material, tokens, count, 6))
+	if (!new_obj)
+		return (printf("Error\nMemory allocation failed\n"), false);
+	*new_obj = (t_object){.type = OBJECT_CYLINDER,
+		.u_data.cylinder = {.center = cyl.center,
+		.axis = vec3_normalize(cyl.axis),
+		.radius = cyl.radius, .height = cyl.height,
+		.material.color = cyl.material.color}};
+	if (!parse_mtl_attr(&new_obj->u_data.cylinder.material, tokens, count, 6))
 		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;
@@ -116,8 +116,8 @@ bool	parse_cone(t_scene *scene, char **tokens)
 	if (!new_obj)
 		return (printf("Error\nMemory allocation failed\n"), false);
 	new_obj->type = OBJECT_CONE;
-	new_obj->data.cone = co;
-	if (!parse_mtl_attr(&new_obj->data.cone.material, tokens, count, 6))
+	new_obj->u_data.cone = co;
+	if (!parse_mtl_attr(&new_obj->u_data.cone.material, tokens, count, 6))
 		return (free(new_obj), printf("Error\nInvalid options\n"), false);
 	new_obj->next = scene->objects;
 	scene->objects = new_obj;

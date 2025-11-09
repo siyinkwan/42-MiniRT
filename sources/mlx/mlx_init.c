@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:40:30 by sguan             #+#    #+#             */
-/*   Updated: 2025/11/07 19:56:02 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 16:20:05 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	init_mlx(t_minirt *minirt)
 
 int	close_window(t_minirt *minirt)
 {
+	t_object	*current;
+	t_object	*next;
+
 	if (minirt->image)
 		mlx_destroy_image(minirt->mlx, minirt->image);
 	if (minirt->window)
@@ -40,6 +43,15 @@ int	close_window(t_minirt *minirt)
 		mlx_destroy_display(minirt->mlx);
 		free(minirt->mlx);
 	}
+	current = minirt->scene.objects;
+	while (current)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	if (minirt->scene.lights)
+		free(minirt->scene.lights);
 	exit(0);
 	return (0);
 }

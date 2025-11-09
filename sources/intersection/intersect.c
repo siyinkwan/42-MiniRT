@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 20:11:24 by sguan             #+#    #+#             */
-/*   Updated: 2025/11/07 17:06:56 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 16:56:54 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static void	set_material(t_hit *hit, t_object *object)
 {
 	if (object->type == OBJECT_SPHERE)
-		hit->material = &object->data.sphere.material;
+		hit->material = &object->u_data.sphere.material;
 	else if (object->type == OBJECT_PLANE)
-		hit->material = &object->data.plane.material;
+		hit->material = &object->u_data.plane.material;
 	else if (object->type == OBJECT_CYLINDER)
-		hit->material = &object->data.cylinder.material;
+		hit->material = &object->u_data.cylinder.material;
 	else if (object->type == OBJECT_CONE)
-		hit->material = &object->data.cone.material;
+		hit->material = &object->u_data.cone.material;
 }
 
 t_hit	intersect_object(t_ray ray, t_object *object)
@@ -36,13 +36,13 @@ t_hit	intersect_object(t_ray ray, t_object *object)
 	if (!object)
 		return (miss);
 	if (object->type == OBJECT_SPHERE)
-		hit = intersect_sphere(ray, object->data.sphere);
+		hit = intersect_sphere(ray, object->u_data.sphere);
 	else if (object->type == OBJECT_PLANE)
-		hit = intersect_plane(ray, object->data.plane);
+		hit = intersect_plane(ray, object->u_data.plane);
 	else if (object->type == OBJECT_CYLINDER)
-		hit = intersect_cylinder(ray, object->data.cylinder);
+		hit = intersect_cylinder(ray, object->u_data.cylinder);
 	else if (object->type == OBJECT_CONE)
-		hit = intersect_cone(ray, object->data.cone);
+		hit = intersect_cone(ray, object->u_data.cone);
 	else
 		return (miss);
 	if (!hit.hit)

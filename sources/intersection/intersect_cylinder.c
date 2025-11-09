@@ -6,7 +6,7 @@
 /*   By: sguan <sguan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 20:15:14 by sguan             #+#    #+#             */
-/*   Updated: 2025/11/07 17:04:27 by sguan            ###   ########.fr       */
+/*   Updated: 2025/11/09 17:32:20 by sguan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ double	cal_hit_infinite_cylinder(t_ray ray, t_cylinder cyl)
 		return (q.t2);
 	return (-1.0);
 }
-
-
 
 double	cal_hit_cylinder_caps(t_ray ray, t_cylinder cyl)
 {
