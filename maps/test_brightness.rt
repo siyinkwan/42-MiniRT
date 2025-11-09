@@ -3,16 +3,14 @@
 
 A 0.3 255,255,255
 
-
-
-# # Test 1: Sphere at origin with spot left/right of camera
-# # Camera positioned to face the sphere at origin
-# # Camera at (-5,8,-15), looking towards origin (0,0,0)
-# C -5,8,-15 0.282166,-0.451466,0.846499 70
-# # Spot light positioned to the LEFT side of the sphere (from camera's perspective)
-# # Sphere will be lit sideways
-# sp 0,0,0 4 200,50,50
-# L -8,3,2 0.8 255,255,255
+# Test 1: Sphere at origin with spot left/right of camera
+# Camera positioned to face the sphere at origin
+# Camera at (-5,8,-15), looking towards origin (0,0,0)
+C -5,8,-15 0.282166,-0.451466,0.846499 70
+# Spot light positioned to the LEFT side of the sphere (from camera's perspective)
+# Sphere will be lit sideways
+sp 0,0,0 4 200,50,50
+L -8,3,2 0.8 255,255,255
 
 
 # # Test 2: Translated sphere with spot

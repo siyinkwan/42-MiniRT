@@ -373,11 +373,10 @@ Where:
 
 ---
 
-## Remember
+## Tips
 
 💡 **Dot product** → Scalar → "How aligned?"  
 💡 **Cross product** → Vector → "Perpendicular direction"  
 💡 **Normalize** → Unit vector → "Direction only, length=1"  
 💡 **Subtract** → Vector → "Direction from A to B"  
 
-**EPSILON = 1e-6** for all floating-point comparisons!

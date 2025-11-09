@@ -1,4 +1,44 @@
-## Table of Contents
+#  📸 MiniRT - Ray Tracing Engine
+
+**A photorealistic ray tracing renderer built from scratch in pure C.** Implements advanced computer graphics algorithms including quadratic-based geometric intersection solvers (sphere, cylinder, cone), Phong illumination model with shadow casting, procedural bump mapping via multi-octave fractal noise, and custom vector mathematics library. Features complete mathematical derivations from linear algebra to rendering equations.
+
+<div align="center">
+
+| Cornell Box | Solar System | Temple Scene |
+|-------------|--------------|--------------|
+| ![Cornell Box](images/cornellbox.png) | ![Solar System](images/solarsystem.png) | ![Temple](images/temple.png) |
+
+| Bump Mapping | Checkerboard | Pokeball |
+|--------------|--------------|---------|
+| ![Bump Mapping](images/bump.png) | ![Checkerboard](images/checkerboard.png) | ![Pokeball](images/pokeball.png) |
+
+</div>
+
+---
+
+## 🚀 Quick Start
+
+```bash
+git clone https://github.com/siyinkwan/42-MiniRT.git
+cd 42-MiniRT
+make
+./miniRT maps/cornellbox.rt
+```
+---
+
+## Technical Core
+
+### Rendering Pipeline
+```
+Ray Generation → Intersection Testing → Shading → Shadow Casting → Pixel Output
+     ↓                    ↓                 ↓             ↓              ↓
+  Camera        Quadratic Solvers    Phong Model   Recursive Rays   RGB Clamping
+  Transform     (at² + bt + c = 0)   (I = Ia+Id+Is)  Shadow Test    Color Mapping
+```
+
+## 🧠 Complete Mathematical Documentation
+
+### 📖 Table of Contents
 1. [Camera & Ray Generation](#1-camera--ray-generation)
 2. [Ray-Object Intersection](#2-ray-object-intersection)
 3. [Lighting (Phong Model)](#3-lighting-phong-model)
@@ -420,20 +460,5 @@ N' = normalize(N - hu·T - hv·B)
 
 ---
 
-## Common Operations
-
-**Vector normalization:**
-$$\text{normalize}(\vec{v}) = \frac{\vec{v}}{|\vec{v}|}$$
-
-**Dot product:**
-$$\vec{a} \cdot \vec{b} = a_x b_x + a_y b_y + a_z b_z$$
-
-**Cross product:**
-$$\vec{a} \times \vec{b} = (a_y b_z - a_z b_y, \quad a_z b_x - a_x b_z, \quad a_x b_y - a_y b_x)$$
-
-**Vector length:**
-$$|\vec{v}| = \sqrt{v_x^2 + v_y^2 + v_z^2}$$
-
-**Color clamping:**
-$$\text{clamp}(c, 0, 1) = \max(0, \min(1, c))$$
-$$RGB = \lfloor 255 \times \text{clamp}(c) \rfloor$$
+## 📐 Vector operations reference
+[VECTOR_CHEATSHEET.md](VECTOR_CHEATSHEET.md)
