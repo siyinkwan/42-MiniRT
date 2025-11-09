@@ -38,7 +38,6 @@ Ray Generation → Intersection Testing → Shading → Shadow Casting → Pixel
 
 ## 🧠 Complete Mathematical Documentation
 
-### 📖 Table of Contents
 1. [Camera & Ray Generation](#1-camera--ray-generation)
 2. [Ray-Object Intersection](#2-ray-object-intersection)
 3. [Lighting (Phong Model)](#3-lighting-phong-model)
