@@ -65,7 +65,7 @@ $$\vec{U} = \text{normalize}(\vec{F} \times \vec{R})$$
 ### 1.2 Ray Generation Through Pixel
 
 **Field of View:**
-`h_viewport = 2 * tan(fov_rad / 2)`, `w_viewport = h_viewport * aspect_ratio`
+$$\text{fov}_{rad} = \frac{\text{fov}_{degrees} \times \pi}{180}$$
 
 **Viewport Dimensions:**
 $$h_{viewport} = 2 \tan\left(\frac{\text{fov}_{rad}}{2}\right)$$
