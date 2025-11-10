@@ -65,11 +65,12 @@ $$\vec{U} = \text{normalize}(\vec{F} \times \vec{R})$$
 ### 1.2 Ray Generation Through Pixel
 
 **Field of View:**
-$$\text{fov}_{rad} = \frac{\text{fov}_{degrees} \times \pi}{180}$$
+
+![Viewport Formula](./images/fov.png)
 
 **Viewport Dimensions:**
-$$h_{viewport} = 2 \tan\left(\frac{\text{fov}_{rad}}{2}\right)$$
-$$w_{viewport} = h_{viewport} \times \text{aspect\_ratio}$$
+
+![Viewport Formula](./images/viewport.png)
 
 **Normalized Device Coordinates (NDC):**
 $$u = \frac{x + 0.5}{width}$$
